@@ -1,0 +1,19 @@
+/* .welcome-banner-img{
+    height:600px;
+    opacity: 0.5;
+} */
+
+.welcome-text {
+    background-color: #FEFFB8;
+    background-image: url("https://media.istockphoto.com/photos/hand-collage-picture-id186595878?k=20&m=186595878&s=612x612&w=0&h=HW2I-jBG3X7zksv3rgtUBXH9YX_7MA2LrRKnfqypPe4="); 
+    background-size: cover;
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    line-height: 400px;
+    color: white;
+    text-align: center;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    font-size: 100px;
+}

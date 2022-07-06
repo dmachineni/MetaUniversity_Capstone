@@ -1,0 +1,26 @@
+.h1{
+    margin-right:50px;
+    color: black;
+}
+
+.left{
+    display:flex;
+    flex-direction:row;
+    float: right;  
+    /* background-color:#D9D9D9; */
+}
+
+.right {
+    display:flex;
+    flex-direction:row;
+    float: left;  
+}
+
+.logo-img{
+    height: 70px;
+}
+
+.navbar{
+    background-color:#D9D9D9;
+    margin-bottom: 70px;
+}
