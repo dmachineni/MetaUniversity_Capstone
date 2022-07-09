@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const info = require('../models/recipes');
 
-console.log("hello from routes")
 let categories = ["brunch"]
 let subCategories = ["under 30 minutes"]
 
@@ -15,5 +14,13 @@ router.get('/', (req,res,next) => {
     }
 })
 
+router.post('/',(req,res,next) => {
+    try {
+        let categories = store.modifyCategories(req.body.categories, req.body.subCategories)
+        res.status(200).send({"categories": categories})
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router

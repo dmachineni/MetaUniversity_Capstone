@@ -21,7 +21,6 @@ app.use((req,res,next) => {
 })
 
 app.use((error, req, res, next) => { //.use is for any middleware fxns; executes for all HTTP requests
-    console.log(error.message)
     let status, message
     status = error.status || 500
     if(!error.message) {
