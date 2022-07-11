@@ -1,25 +1,22 @@
 
 import "./ListGrid.css"
-import ListCard from "../ListCard/ListCard"
 import React from 'react';
+import ListCard from "../ListCard/ListCard"
 
 
-export default function ProductGrid(props) {
+export default function ListGrid(props) {
     return (
-      // <div className="product-grid">
-      //   {props.products.map((product, idx) => {
-      //     let q = 0;
-      //     let obj =  props.shoppingCart.find((item) => product.id == item.itemId);
-      //     if(obj != undefined) {
-      //       q = obj.quantity;
-      //     }
-  
-      //     return (<ProductCard key={idx} product={product} showDescription={false} quantity={q}
-      //       productId = {product.itemId} handleAddItemToCart={props.handleAddItemToCart} 
-      //       handleRemoveItemFromCart={props.handleRemoveItemFromCart}
-      //       />)
-      //   }) }
-      // </div>
-      <div className="list-grid">Hi</div>
+      <div className="list-grid">
+        {props.categoryRecipes.map((item,idx) => {
+          // {console.log('subcat: ', props.categoryRecipes[idx])}
+          let subCat = Object.keys(item)
+          // console.log('subcat', item[subCat[0]])
+          if (item[subCat[0]].length != 0) {
+            return (
+              <ListCard category= {props.category} subCat={subCat[0]} subCatRecipes={item[subCat[0]]}/>
+            )
+          }
+        })}
+      </div>
     )
 }

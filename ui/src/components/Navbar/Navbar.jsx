@@ -2,7 +2,6 @@ import * as React from "react"
 import "./Navbar.css"
 
 export default function Navbar() {
-    console.log('hi');
   return (
     <div className="navbar">
         <div className="right">

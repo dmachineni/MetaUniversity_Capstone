@@ -5,11 +5,11 @@ import ContactUs from "../ContactUs/ContactUs"
 import Search from "../Search/Search"
 import Categories from "../Categories/Categories"
 
-export default function Home() {
+export default function Home(props) {
     return (
         <div className="home">
             <Search />
-            <Categories />
+            <Categories categorizedRecipes = {props.categorizedRecipes} categories={props.categories} subCategories={props.subCategories}/>
             <About />
             <ContactUs />
         </div>

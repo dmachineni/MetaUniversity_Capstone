@@ -2,7 +2,7 @@ import "./ListCard.css"
 import * as React from "react"
 import { Link } from "react-router-dom"
 
-export function ProductCard(props) {
+export default function ListCard(props) {
     return (
       // <div className="product-card">
         
@@ -36,6 +36,18 @@ export function ProductCard(props) {
   
       //   </div>
       // </div>
-      <div>hi</div>
+
+      <div className="list-card">
+        {/* add pic, after the list name */}
+        {console.log("check", props.category, props.subCat, props.subCatRecipes)}
+        <Link className = "product-img" to={`/list/${props.category}/${props.subCat}`}>
+          <img className="img" src={props.subCatRecipes[0]["thumbnail_url"]}></img>  
+        </Link>
+
+        <p className = "list-name" >
+          {props.subCat}
+         </p>
+
+      </div>
     )
 }

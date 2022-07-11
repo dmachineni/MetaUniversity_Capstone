@@ -4,7 +4,7 @@ import * as React from "react"
 export default function GeneratePopUp() {
     return (
         <div className="add-to-calendar">
-            
+            hi
         </div>
     )
 }
