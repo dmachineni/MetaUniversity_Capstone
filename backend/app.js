@@ -1,9 +1,10 @@
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+var cors = require('cors')
+
 const store = require('./routes/recipes')
 const { NotFoundError } = require('./utils/errors')
-var cors = require('cors')
 
 const app = express()
 
@@ -12,15 +13,11 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use ('/', store)
 
-// app.get('/store', (req,res) => {
-//     res.status(200).send({"ping":"pong"})
-// })
-
 app.use((req,res,next) => {
     next(new NotFoundError())
 })
 
-app.use((error, req, res, next) => { //.use is for any middleware fxns; executes for all HTTP requests
+app.use((error, req, res, next) => {
     let status, message
     status = error.status || 500
     if(!error.message) {
