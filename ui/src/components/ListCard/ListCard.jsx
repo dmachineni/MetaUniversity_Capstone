@@ -39,14 +39,14 @@ export default function ListCard(props) {
 
       <div className="list-card">
         {/* add pic, after the list name */}
-        {console.log("check", props.category, props.subCat, props.subCatRecipes)}
-        <Link className = "product-img" to={`/list/${props.category}/${props.subCat}`}>
+        {console.log("check", props.category, props.subCat, props.subCatRecipes[0]["thumbnail_url"])}
+        <Link onClick={props.handleListDetails(props.category, props.subCat)} className = "product-img" to={`/list/${props.category}/${props.subCat}`}>
           <img className="img" src={props.subCatRecipes[0]["thumbnail_url"]}></img>  
         </Link>
 
         <p className = "list-name" >
           {props.subCat}
-         </p>
+        </p>
 
       </div>
     )
