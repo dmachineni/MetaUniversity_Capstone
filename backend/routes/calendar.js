@@ -43,15 +43,14 @@ router.post('/create-tokens', async (req,res,next) => {
                         .catch(error => next(error))
                     console.log("created obj")
         
-                    //think i should do this in the ui
                     // query.equalTo("idToken", tokens.id_token);
                     // const obj = await query.first();
                     // console.log("finding obj", obj)
-                    res.send({"message": "created a new user", "userLists":[]})
+                    res.send({"message": "created a new user", "userLists":[], "id":"not working as of now", "tokens":tokens})
                     console.log("bye")
         
                 } else {
-                    res.send({"message": "returning user", "userLists": results.get("userLists"),"id": results.get("id")})
+                    res.send({"message": "returning user", "userLists": results.get("userLists"),"id": results.get("id"),"tokens":tokens})
                 }
             })
             .catch (error => next(error))

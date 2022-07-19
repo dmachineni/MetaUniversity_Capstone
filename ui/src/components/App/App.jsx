@@ -23,6 +23,7 @@ export default function App() {
   const [idToken, setIdToken] = useState("")
   const [accessToken, setAccessToken] = useState("")
   const [expiryDate, setExpiryDate] = useState("")
+  const [userLists, setUserLists] = useState([])
 
 
 
@@ -66,14 +67,15 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <main>
-          <Navbar setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} setObjectId={setObjectId} />
+          <Navbar idToken={idToken} setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} 
+            setObjectId={setObjectId} setUserLists={setUserLists} />
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
                 <WelcomeBanner />
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
                     isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
-                    />
+                    idToken={idToken}/>
               </div>
             }/>
             <Route path="/list/:category/:listName" element={

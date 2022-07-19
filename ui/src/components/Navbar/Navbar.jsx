@@ -15,10 +15,11 @@ export default function Navbar(props) {
     const code = response
     axios.post('http://localhost:3001/api/create-tokens', {code})
       .then( async response =>  {
-        props.setIdToken(response.data.id_token)
-        props.setAccessToken(response.data.access_token)
-        props.setExpiryDate(response.data.expiry_date)
+        props.setIdToken(response.data.tokens.id_token)
+        props.setAccessToken(response.data.tokens.access_token)
+        props.setExpiryDate(response.data.tokens.expiry_date)
         props.setObjectId(response.data.id)
+        props.setUserLists(response.data.userLists)
         // if(response.data.message === "created new user") {
         //   query.equalTo("idToken", response.data.id_token);
         //   query.find()
@@ -31,6 +32,13 @@ export default function Navbar(props) {
         console.log('data',response.data)
       })
       .catch(error => {console.log(error)})
+  }
+
+  const handleLogOut = () => {
+    props.setIdToken("")
+    props.setAccessToken("")
+    props.setExpiryDate("")
+    props.setObjectId("")
   }
 
   const responseError = error => {
@@ -52,7 +60,9 @@ export default function Navbar(props) {
   return (
     <div className="navbar">
         <div className="right"> 
+          <Link to="/">
             <img className="logo-img" src={logoImg}></img>
+          </Link>
         </div>
         <div className="left">
             <h1 >Home</h1>
@@ -60,10 +70,12 @@ export default function Navbar(props) {
             <h1 >Contact Us</h1>
             <h1 >Calendar</h1>
             <h1 >
-            {/* <Link className = "product-img" to={`/login`}> */}
+            {props.idToken === "" ?
               <GoogleLogin clientId={clientId} buttonText='Log in to get started!' onSuccess={responseGoogle} onFailure={responseError}
-                cookiePolicy={'single_host_origin'} responseType="code" accessType="offline" scope="openid email profile https://www.googleapis.com/auth/calendar"/> 
-            {/* </Link> */}
+              cookiePolicy={'single_host_origin'} responseType="code" accessType="offline" scope="openid email profile https://www.googleapis.com/auth/calendar"/> 
+              : 
+              <button className="log-out button" onClick={handleLogOut}>Log Out</button>
+            }
             </h1> 
 
             

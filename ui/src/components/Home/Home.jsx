@@ -20,7 +20,7 @@ export default function Home(props) {
     const [signedIn, setSignedIn] = useState(false)
     return (
         <div className="home">
-            <div>
+            {/* <div>
               <form onSubmit={handleSubmit}>
                 <label htmlFor="summary">Summary</label>
                 <br />
@@ -49,7 +49,7 @@ export default function Home(props) {
 
                 <button type='submit'>create event</button> 
               </form>
-            </div>
+            </div> */}
 
             <Search />
             <Categories categorizedRecipes = {props.categorizedRecipes} categories={props.categories} 
