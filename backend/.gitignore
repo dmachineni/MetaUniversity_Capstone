@@ -1,5 +1,5 @@
 node_modules
-
+auth-keys.js
 *-lock.*
 *.lock
 

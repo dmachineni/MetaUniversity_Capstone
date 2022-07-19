@@ -8,29 +8,34 @@ const Parse = require('parse/node')
 Parse.initialize("WrhhT0n3PD3RkdESL6pAsvqN86YDNS9eP0v1VdZg", "WliFyOgGrffxxYv0IfvChkvx8a1ByDYKY7tadIDW")
 Parse.serverURL = "https://parseapi.back4app.com"
 
-const parseQuery = new Parse.Query('AllRecipes')
-parseQuery.descending('createdAt')
+let parseQuery
 
 class Recipes {
 
     /* returns all recipes sorted by categories and subcategories in a JSON object of arrays
       retrieves all recipes (parse objects) from class 'AllRecipes' and calls 2 helper functions for each category*/
     static async getAllLists() {
+      parseQuery = new Parse.Query('AllRecipes')
+      parseQuery.descending('createdAt')
+
       let recipeIds = []
       await parseQuery.find().then((result) => {
         result.forEach((id) => {
           recipeIds.push(id.id)
         })
       })
+      console.log('recIds in all lists', recipeIds)
 
-      let categories = ["brunch","lunch","dinner","desserts"]
-      let subCategories = ["under 30 minutes","comfort food", "special occassion"] 
+      let categories = ["desserts"]
+      let subCategories = ["under 30 minutes","comfort food"] 
 
       let toReturn = {"all lists": {}}
       for (let i = 0; i < categories.length; i++) {
         let category = categories[i]
         let allCatRecipeIds = await this.getCategoryRecipes(category,recipeIds);
+        console.log('all category recipe ids',allCatRecipeIds)
         let allSubCatRecipesIds = await this.getSubCategoryRecipes(allCatRecipeIds, subCategories)
+        console.log('all subcategory recipe ids',allSubCatRecipesIds)
         toReturn["all lists"][category] = allSubCatRecipesIds["subcategory recipes"]
       }
       return toReturn
@@ -73,17 +78,33 @@ class Recipes {
             let id = recipeIds[j]
             let parseObj = await parseQuery.get(id)
             let tags = await parseObj.get("tags")
+            let matched = false
 
-            tags.forEach(tag => {
-              //TODO: how to test whether tag.name and tag.type exists? 
-              if(tag.name.toLowerCase() === subCat) {  
-                console.log("hi")
-                toAdd[subCat].push(id)
-              } else if (tag.type.toLowerCase() === subCat) {
-                  toAdd[subCat].push(id)
-              } else if (tag.display_name.toLowerCase() === subCat) {
-                  toAdd[subCat].push(id)
-              }
+            tags.map(async tag => {
+              //TODO: how to test whether tag.name and tag.type exists?
+              if(!matched) {
+                if(tag.name.toLowerCase() === subCat) {  
+                  console.log("hi")
+                  matched = true
+                } else if (tag.type.toLowerCase() === subCat) {
+                  matched = true
+                } else if (tag.display_name.toLowerCase() === subCat) {
+                  matched = true
+                }
+  
+                if(matched) {
+                  let name = await parseObj.get("name")
+                  let pic = await parseObj.get("thumbnailUrl")
+                  let description = await parseObj.get("description")
+                  let obj = {
+                    "id":id,
+                    "name":name,
+                    "thumbnail_url":pic,
+                    "description":description
+                  }
+                  toAdd[subCat].push(obj)
+                }
+              } 
             })
           }
           toReturn["subcategory recipes"].push(toAdd)
