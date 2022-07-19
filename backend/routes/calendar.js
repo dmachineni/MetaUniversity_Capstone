@@ -22,6 +22,7 @@ router.post('/create-tokens', async (req,res,next) => {
     try {
         const {code} = req.body
         const {tokens} = await oauth2Client.getToken(code)
+        console.log('tokens', tokens)
 
         const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
@@ -43,10 +44,10 @@ router.post('/create-tokens', async (req,res,next) => {
                 .catch(error => next(error))
             console.log("created obj")
 
-            await query.equalTo("idToken", tokens.id_token);
-            const obj = await query.find();
-            console.log("finding obj", obj)
-            res.send({"message": "created a new user", "userLists":[], "id":obj})
+            query.equalTo("idToken", response.data.id_token);
+            // await query.find()
+            //     .then(obj => {res.send({"message": "created a new user", "userLists":[], "id": obj.get("objectId")})})
+            res.send({"message": "created a new user", "userLists":[]})
             console.log("bye")
 
         } else {

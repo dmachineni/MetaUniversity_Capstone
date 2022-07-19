@@ -66,7 +66,7 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <main>
-          <Navbar idToken ={idToken} setIdToken={setIdToken}/>
+          <Navbar setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} setObjectId={setObjectId} />
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
