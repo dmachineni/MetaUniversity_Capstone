@@ -22,6 +22,7 @@ router.post('/create-tokens', async (req,res,next) => {
     try {
         const {code} = req.body
         const {tokens} = await oauth2Client.getToken(code)
+        console.log('tokens', tokens)
 
         const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
@@ -54,7 +55,6 @@ router.post('/create-tokens', async (req,res,next) => {
                 }
             })
             .catch (error => next(error))
-       
     } catch (error) {
         next(error)
     }
