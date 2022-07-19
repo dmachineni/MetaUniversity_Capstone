@@ -25,33 +25,36 @@ router.post('/create-tokens', async (req,res,next) => {
 
         const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
-        await query.equalTo("idToken", tokens.id_token);
-        const results = await query.find();
-        console.log('res', JSON.stringify(results))
-        console.log('tokens id', JSON.stringify(tokens.id_token))
-        // res.send(results)
-
-        if(results.length === 0) {
-            console.log("hi")
-            const userObject = new UserInfo();
-            userObject.set("idToken", tokens.id_token)
-            userObject.set("refreshToken", '1//0d_m-1e_31rw0CgYIARAAGA0SNwF-L9IrFRzOCIot1X_OnrHje1v9UKmTU0ONLUmflwF8BnA5_JtPZOo2ijfk0Lng5GTlEqiw1jM')
-            // userObject.set("refreshToken", tokens.refresh_token)
-            userObject.set("userLists", [])
-            userObject.save()
-                // .then(res.send({"message": "created a new user", "userLists":[]}))
-                .catch(error => next(error))
-            console.log("created obj")
-
-            await query.equalTo("idToken", tokens.id_token);
-            const obj = await query.find();
-            console.log("finding obj", obj)
-            res.send({"message": "created a new user", "userLists":[], "id":obj})
-            console.log("bye")
-
-        } else {
-            res.send({"message": "returning user", "userLists": results[0].userLists,"id": results[0].id})
-        }
+        query.equalTo("idToken", tokens.id_token);
+        query.first()
+            .then (results => {
+                console.log('res', results)
+                console.log('tokens id', typeof(tokens.id_token))
+                if(results === undefined) {
+                    console.log("hi")
+                    const userObject = new UserInfo();
+                    userObject.set("idToken", tokens.id_token)
+                    userObject.set("refreshToken", '1//0d_m-1e_31rw0CgYIARAAGA0SNwF-L9IrFRzOCIot1X_OnrHje1v9UKmTU0ONLUmflwF8BnA5_JtPZOo2ijfk0Lng5GTlEqiw1jM')
+                    // userObject.set("refreshToken", tokens.refresh_token)
+                    userObject.set("userLists", [])
+                    userObject.save()
+                        // .then(res.send({"message": "created a new user", "userLists":[]}))
+                        .catch(error => next(error))
+                    console.log("created obj")
+        
+                    //think i should do this in the ui
+                    // query.equalTo("idToken", tokens.id_token);
+                    // const obj = await query.first();
+                    // console.log("finding obj", obj)
+                    res.send({"message": "created a new user", "userLists":[]})
+                    console.log("bye")
+        
+                } else {
+                    res.send({"message": "returning user", "userLists": results.get("userLists"),"id": results.get("id")})
+                }
+            })
+            .catch (error => next(error))
+       
     } catch (error) {
         next(error)
     }
