@@ -18,6 +18,12 @@ export default function App() {
   const [retrievedRecipes, setRetrievedRecipes] = useState(false)
   const [category, setCategory]  = useState("")
   const [subCategory, setSubCategory]  = useState("")
+  //user state variables
+  const [objectId, setObjectId] = useState("")
+  const [idToken, setIdToken] = useState("")
+  const [accessToken, setAccessToken] = useState("")
+  const [expiryDate, setExpiryDate] = useState("")
+
 
 
   console.log("from app")
@@ -60,13 +66,14 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <main>
-          <Navbar />
+          <Navbar idToken ={idToken} setIdToken={setIdToken}/>
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
                 <WelcomeBanner />
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
-                    isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}/>
+                    isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
+                    />
               </div>
             }/>
             <Route path="/list/:category/:listName" element={
