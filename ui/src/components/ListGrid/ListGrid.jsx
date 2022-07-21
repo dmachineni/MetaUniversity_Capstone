@@ -1,4 +1,3 @@
-
 import "./ListGrid.css"
 import React from 'react';
 import ListCard from "../ListCard/ListCard"
@@ -9,8 +8,6 @@ export default function ListGrid(props) {
       <div className="list-grid">
         {props.categoryRecipes.map((item,idx) => {
           let subCat = Object.keys(item)
-          console.log('subcat', item[subCat[0]])
-          console.log('subcat: ', props.categoryRecipes)
 
           if (item[subCat[0]].length != 0) {
             return (

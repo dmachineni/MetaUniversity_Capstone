@@ -1,14 +1,14 @@
 import "./ListDetails.css"
 import * as React from "react"
-import GeneratePopUp from "../GeneratePopUp/GeneratePopUp"
+import ListDetailsBanner from "../ListDetailsBanner/ListDetailsBanner"
+import ListDetailsButtons from "../ListDetailsButtons/ListDetailsButtons"
 
-export default function SingleList(props) {
+export default function ListDetails(props) {
+    let len = props.categorizedRecipes[props.category].length
     return (
         <div className="single-list">
-            <div className="singlie-list-banner">
-                {props.category}{props.subCategory}
-            </div>
-            <GeneratePopUp />
+            <ListDetailsBanner />
+            <ListDetailsButtons />
         </div>
     )
 }
