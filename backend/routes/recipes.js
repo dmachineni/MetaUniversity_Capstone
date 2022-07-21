@@ -12,7 +12,6 @@ Parse.serverURL = "https://parseapi.back4app.com"
 router.get('/', async (req,res,next) => {
     try {
         let recipes = await info.getAllLists()
-        console.log('recipes',JSON.stringify(recipes))
         res.status(200).send(recipes) 
     } catch (error) {
         next(error)

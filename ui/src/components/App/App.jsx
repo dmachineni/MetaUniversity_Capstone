@@ -23,7 +23,11 @@ export default function App() {
   const [idToken, setIdToken] = useState("")
   const [accessToken, setAccessToken] = useState("")
   const [expiryDate, setExpiryDate] = useState("")
-
+  const [userLists, setUserLists] = useState([])
+  const [name, setName] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [email, setEmail] = useState("")
+  const [sub, setSub] = useState("")
 
 
   console.log("from app")
@@ -31,18 +35,9 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function requests() {
-      console.log("use effect")
-
-      // axios.post('http://localhost:3001/', {
-      //   categories: categories, subCategories: subCategories
-      // })
-      //   .then(result => {(console.log('cat',result.data.categories, ' subcat:',result.data.subCategories))})
-      //   .catch(e=>setError(e))
-  
       await axios.get('http://localhost:3001/')
         .then(result => {
           console.log('data',result)
-          // console.log('data',JSON.stringify(result.data["all lists"]))
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
         })
@@ -59,21 +54,20 @@ export default function App() {
     setSubCategory(subCat)
   }
 
-  // console.log('recipes:',categorizedRecipes)
-  // setCategorizedRecipes()
-
   return (
     <div className="app">
       <BrowserRouter>
         <main>
-          <Navbar setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} setObjectId={setObjectId} />
+          <Navbar idToken={idToken} setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} 
+            setObjectId={setObjectId} setUserLists={setUserLists} setName={setName} setFirstName={setFirstName} setEmail={setEmail} 
+            setSub={setSub} />
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
                 <WelcomeBanner />
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
                     isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
-                    />
+                    idToken={idToken}/>
               </div>
             }/>
             <Route path="/list/:category/:listName" element={

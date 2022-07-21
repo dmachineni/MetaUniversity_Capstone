@@ -24,7 +24,6 @@ class Recipes {
           recipeIds.push(id.id)
         })
       })
-      console.log('recIds in all lists', recipeIds)
 
       let categories = ["desserts"]
       let subCategories = ["under 30 minutes","comfort food"] 
@@ -33,9 +32,7 @@ class Recipes {
       for (let i = 0; i < categories.length; i++) {
         let category = categories[i]
         let allCatRecipeIds = await this.getCategoryRecipes(category,recipeIds);
-        console.log('all category recipe ids',allCatRecipeIds)
         let allSubCatRecipesIds = await this.getSubCategoryRecipes(allCatRecipeIds, subCategories)
-        console.log('all subcategory recipe ids',allSubCatRecipesIds)
         toReturn["all lists"][category] = allSubCatRecipesIds["subcategory recipes"]
       }
       return toReturn
@@ -84,7 +81,6 @@ class Recipes {
               //TODO: how to test whether tag.name and tag.type exists?
               if(!matched) {
                 if(tag.name.toLowerCase() === subCat) {  
-                  console.log("hi")
                   matched = true
                 } else if (tag.type.toLowerCase() === subCat) {
                   matched = true
