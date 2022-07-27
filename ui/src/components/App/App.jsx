@@ -1,12 +1,13 @@
 import * as React from "react"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import WelcomeBanner from '../WelcomeBanner/WelcomeBanner';
-import Navbar from '../Navbar/Navbar';
-import './App.css';
-import Home from '../Home/Home';
+import WelcomeBanner from '../WelcomeBanner/WelcomeBanner'
+import Navbar from '../Navbar/Navbar'
+import './App.css'
+import Home from '../Home/Home'
 import NotFound from "../NotFound/NotFound"
 import ListDetails from "../ListDetails/ListDetails"
-import { useState, useEffect} from "react"
+import NewUserList from "../NewUserList/NewUserList"
+import {useState, useEffect} from "react"
 import axios from 'axios'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
   const [retrievedRecipes, setRetrievedRecipes] = useState(false)
   const [category, setCategory]  = useState("")
   const [subCategory, setSubCategory]  = useState("")
+  const [subCatRecipes, setSubCatRecipes] = useState()
   //user state variables
   const [objectId, setObjectId] = useState("")
   const [idToken, setIdToken] = useState("")
@@ -28,10 +30,10 @@ export default function App() {
   const [firstName, setFirstName] = useState("")
   const [email, setEmail] = useState("")
   const [sub, setSub] = useState("")
-
-
-  console.log("from app")
-
+  //user list variables
+  const [userListName, setUserListName] = useState("")
+  const [newListRecipes, setNewListRecipes] = useState([])
+ 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function requests() {
@@ -49,9 +51,21 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleListDetails = (cat, subCat) => {
+  const handleListDetails = (cat, subCat, subCatRecipes) => {
+    console.log('handleListDetails function',cat,subCat)
     setCategory(cat)
     setSubCategory(subCat)
+    setSubCatRecipes(subCatRecipes)
+  }
+
+  const createList = () => {
+    console.log("hi from app create list", objectId, userListName)
+    axios.post('http://localhost:3001/api/create-new-user-list', {"listName":userListName, "recipes":newListRecipes, "objectId":objectId})
+      .then (res => {
+        console.log("updated from app create list", JSON.stringify(res.data.updatedUserLists))
+        setUserLists(res.data.updatedUserLists)
+      })
+      .catch (e => console.log(e))
   }
 
   return (
@@ -64,15 +78,16 @@ export default function App() {
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
-                <WelcomeBanner />
+                <WelcomeBanner idToken={idToken} firstName={firstName} />
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
                     isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
-                    idToken={idToken}/>
+                    idToken={idToken} userLists={userLists} setUserListName={setUserListName} createList={createList}
+                    setNewListRecipes={setNewListRecipes}/>
               </div>
             }/>
             <Route path="/list/:category/:listName" element={
               <div className='single-list'>
-                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory}/>
+                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} pic={""} idToken={idToken}/>
               </div>
             }/>
             <Route path="*" element={

@@ -18,10 +18,13 @@ export default function Navbar(props) {
         props.setAccessToken(response.data.tokens.access_token)
         props.setExpiryDate(response.data.tokens.expiry_date)
         props.setUserLists(response.data.userLists)
+        console.log('name',response.data.name)
         props.setName(response.data.name)
         props.setFirstName(response.data.firstName)
         props.setEmail(response.data.email)
         props.setSub(response.data.sub)
+        console.log('id',response.data.objectId)
+        props.setObjectId(response.data.objectId)
       })
       .catch(error => {console.log(error)})
   }

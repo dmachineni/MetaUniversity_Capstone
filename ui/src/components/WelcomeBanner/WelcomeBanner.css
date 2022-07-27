@@ -1,27 +1,30 @@
-/* .welcome-banner-img{
-    height:600px;
-    opacity: 0.5;
-} */
-
 .banner{
-    background-image: url("https://media.istockphoto.com/photos/hand-collage-picture-id186595878?k=20&m=186595878&s=612x612&w=0&h=HW2I-jBG3X7zksv3rgtUBXH9YX_7MA2LrRKnfqypPe4="); 
-    background-size: cover;
-    position: relative;
+    background:url("https://thumbs.dreamstime.com/b/world-cuisine-chicken-recipes-collage-menu-background-214329316.jpg"); 
     height: 50vh;
     width: 100%;
+    background-size: cover;
+    position: relative;
 }
 
 .welcome-text {
-    /* background-color: #FEFFB8; */
+    position: absolute;
     top: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    transform: translateY(-50%);
-
-    /* color: white; */
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    color: #000;
+    padding:16px;
+    border-radius:8px;
+    margin:0;
     text-align: center;
-    /* margin-top: 0%;
-    margin-bottom: 0%; */
-    font-size: 100px;
+    font-size: 6em;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+}
+
+.welcome-text h1:last-child {
+    mix-blend-mode: normal;
+    background: none;
+    color: transparent;
+    box-shadow: 0 0 16px #000, 0 0 32px #000;
 }
