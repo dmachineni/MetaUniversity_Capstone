@@ -6,7 +6,6 @@ import './App.css'
 import Home from '../Home/Home'
 import NotFound from "../NotFound/NotFound"
 import ListDetails from "../ListDetails/ListDetails"
-import NewUserList from "../NewUserList/NewUserList"
 import {useState, useEffect} from "react"
 import axios from 'axios'
 
