@@ -28,8 +28,8 @@ router.post('/create-tokens', async (req,res,next) => {
     try {
         const {code} = req.body
         const {tokens} = await oauth2Client.getToken(code)
-        verify(tokens.id_token).catch(console.error);
-        const UserInfo = Parse.Object.extend("UserInfo");
+        verify(tokens.id_token).catch(console.log(error))
+        const UserInfo = Parse.Object.extend("UserInfo")
         const query = new Parse.Query(UserInfo);
         let idTokenClaims = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
 
@@ -50,30 +50,28 @@ router.post('/create-tokens', async (req,res,next) => {
                         userObject.set("userLists", [])
                         userObject.save()
                             .then(userObject =>{
-                                console.log("id from post create tokens", userObject.id)
                                 const {sub,name,email} = idTokenClaims.data
                                 res.send({"objectId":userObject.id,message: "created a new user", "userLists":[], "tokens":tokens, sub, name, firstName:idTokenClaims.data.given_name, email})        
                             })
-                            .catch(error => {console.log("from nested 2 catch");next(error)})
+                            .catch(error => next(error))
 
                     } else {
                         res.send({"message": "returning user", "userLists": result.get("userLists"),"objectId": result.id,"tokens":tokens, "sub":idTokenClaims.data.sub, "name":result.get("name"), "firstName":result.get("firstName"), "email":result.get("email")})
                     }
                 })
-                .catch (error => {console.log("from nested catch");next(error)})
+                .catch (error => next(error))
         // } else {
         //     res.send("not valid")
         // }
 
        
     } catch (error) {
-        {console.log("from catch");next(error)}
+        next(error)
     }
 })
 
 router.post('/create-new-user-list', (req,res,next) => {
     try {
-        console.log("hi from backend", req.body)
         const {listName} = req.body //string
         let recipes = req.body.recipes //array of objs
         recipes = [{"id":"CBrIXvVYEM","name":"Ube Halaya","thumbnail_url":"https://img.buzzfeed.com/tasty-app-user-assets-prod-us-east-1/recipes/33b31a7e1c77404faf157c5dd848ad49.jpeg","description":"Ube halaya, also known as “purple yam jam,” is a classic Filipino dessert that can be eaten on its own or used as a topping or filling in many other desserts. It is made with mashed up purple yams, evaporated milk, and ube or regular condensed milk for a silky smooth, rich texture. This creamy and vibrant dessert will wow your guests!"}]
@@ -83,12 +81,9 @@ router.post('/create-new-user-list', (req,res,next) => {
 
         query.get(req.body.objectId)
             .then (async user => {
-                console.log("still working from backend",JSON.stringify({[listName]:recipes}))
                 user.add("userLists", {[listName]:recipes})
                 user.save()
-                console.log("hi from backend saved")
                 let updated = await user.get("userLists")
-                console.log("hi from backend updated")
                 res.send({"updatedUserLists":updated})
             })
             .catch (e => next(e))
