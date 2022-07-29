@@ -6,8 +6,8 @@ export default function RecipeGrid(props) {
     return (
         <div className="recipe-grid">
             {   
-                props.subCatRecipes.map((rec) => {
-                    return <RecipeCard pic={rec.thumbnail_url} name={rec.name} rec={rec}/>
+                props.subCatRecipes.map((recipe) => {
+                    return <RecipeCard pic={recipe.thumbnail_url} name={recipe.name} recipe={recipe}/>
                 })
             }
         </div>

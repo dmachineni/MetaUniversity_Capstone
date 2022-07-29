@@ -3,7 +3,6 @@ import * as React from "react"
 import ListDetailsHero from "../ListDetailsHero/ListDetailsHero"
 import ListDetailsButtons from "../ListDetailsButtons/ListDetailsButtons"
 import RecipeGrid from "../RecipeGrid/RecipeGrid"
-import Search from "../Search/Search"
 
 export default function ListDetails(props) {
     let profilePic
@@ -21,7 +20,7 @@ export default function ListDetails(props) {
             <ListDetailsButtons />
             <RecipeGrid subCatRecipes={props.subCatRecipes}/>
 
-            {props.category === "user lists" ? <Search />:""}
+            {/* {props.category === "user lists" ? <Search />:""} */}
         </div>
     )
 }
