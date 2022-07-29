@@ -10,7 +10,7 @@ export default function Search(props) {
                 <label> 
                     <div className="search-here-text">Search Here: </div>
                     <input label = "Search Here" type = "text" id = "search" placeholder="Search for a recipe here" onChange={(e) => {
-                        e.preventDefault()
+                        // e.preventDefault()
                         props.handleOnSearchChange(e.target.value)}}
                     ></input>
                     <button className="submit-search-input" onClick={(e) => {
@@ -24,7 +24,9 @@ export default function Search(props) {
             <div className="search-results" >
                 {props.searchRecipes !== undefined && props.searchRecipes.map((rec, idx) => {
                     return(
-                        <ListCard category="search" recipe={rec} />
+                        <ListCard category="search" recipe={rec} setChosenRecipe={props.setChosenRecipe} handleChooseRecipe={props.handleChooseRecipe}  
+                            userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes}
+                            setUserListName={props.setUserListName} handleAddRecipe={props.handleAddRecipe}/>
                     )
                 })}
             </div>

@@ -28,8 +28,8 @@ router.post('/create-tokens', async (req,res,next) => {
     try {
         const {code} = req.body
         const {tokens} = await oauth2Client.getToken(code)
-        verify(tokens.id_token).catch(console.log(error))
-        const UserInfo = Parse.Object.extend("UserInfo")
+        verify(tokens.id_token).catch(console.error);
+        const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
         let idTokenClaims = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
 
@@ -53,20 +53,20 @@ router.post('/create-tokens', async (req,res,next) => {
                                 const {sub,name,email} = idTokenClaims.data
                                 res.send({"objectId":userObject.id,message: "created a new user", "userLists":[], "tokens":tokens, sub, name, firstName:idTokenClaims.data.given_name, email})        
                             })
-                            .catch(error => next(error))
+                            .catch(error => {next(error)})
 
                     } else {
                         res.send({"message": "returning user", "userLists": result.get("userLists"),"objectId": result.id,"tokens":tokens, "sub":idTokenClaims.data.sub, "name":result.get("name"), "firstName":result.get("firstName"), "email":result.get("email")})
                     }
                 })
-                .catch (error => next(error))
+                .catch (error => {next(error)})
         // } else {
         //     res.send("not valid")
         // }
 
        
     } catch (error) {
-        next(error)
+        {next(error)}
     }
 })
 
@@ -87,6 +87,29 @@ router.post('/create-new-user-list', (req,res,next) => {
                 res.send({"updatedUserLists":updated})
             })
             .catch (e => next(e))
+    } catch(error) {
+        next(error)
+    }
+})
+
+router.post('/add-recipe-to-user-list', (req,res,next) => {
+    try {
+        const UserInfo = Parse.Object.extend("UserInfo");
+        const query = new Parse.Query(UserInfo);
+
+        query.get(req.body.objectId)
+            .then (async user => {
+                let prev = await user.get("userLists")
+                prev.map((list,i) => {
+                    if(Object.keys(list)[0] === req.body.listName) {
+                        prev[i][req.body.listName].push(req.body.recipe)
+                    }
+                })
+                user.set("userLists", prev)
+                user.save()
+            })
+            .catch(e => next(e))
+        
     } catch(error) {
         next(error)
     }

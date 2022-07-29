@@ -35,6 +35,7 @@ export default function App() {
   const [newListRecipes, setNewListRecipes] = useState([])
   //search variables
   const [searchRecipes, setSearchRecipes] = useState([])
+  const [chosenRecipe, setChosenRecipe] = useState({})
  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -59,6 +60,7 @@ export default function App() {
   }
 
   const createList = () => {
+    console.log("from create list in app")
     axios.post('http://localhost:3001/api/create-new-user-list', {"listName":userListName, "recipes":newListRecipes, "objectId":objectId})
       .then (res => {
         setUserLists(res.data.updatedUserLists)
@@ -70,6 +72,19 @@ export default function App() {
     axios.get(`http://localhost:3001/${searchInput}`)
       .then (res => {
         setSearchRecipes(res.data.recipes)
+      })
+      .catch (e => console.log(e))
+  }
+
+  const handleChooseRecipe = (recipe) => {
+    setChosenRecipe(recipe)
+  }
+
+  const handleAddRecipe = (listName) => {
+    console.log("from handle On Search Change in app",listName,chosenRecipe)
+    axios.post('http://localhost:3001/api/add-recipe-to-user-list', {"recipe":chosenRecipe, "objectId":objectId, "listName":listName})
+      .then (res => {
+        setUserLists(res.data.updatedUserLists)
       })
       .catch (e => console.log(e))
   }
@@ -88,17 +103,21 @@ export default function App() {
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
                     isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
                     idToken={idToken} userLists={userLists} setUserListName={setUserListName} createList={createList}
-                    setNewListRecipes={setNewListRecipes}/>
+                    setNewListRecipes={setNewListRecipes} setChosenRecipe={setChosenRecipe} handleChooseRecipe={handleChooseRecipe}
+                    newListRecipes={newListRecipes} handleAddRecipe={handleAddRecipe}/>
               </div>
             }/>
             <Route path="/list/:category/:listName" element={
               <div className='single-list'>
-                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} pic={""} idToken={idToken}/>
+                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} 
+                  pic={""} idToken={idToken}/>
               </div>
             }/>
             <Route path="/search" element={
               <div className='search-page'>
-                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} />
+                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setChosenRecipe={setChosenRecipe} 
+                  handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
+                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe}/>
               </div>
             }/>
             <Route path="*" element={
