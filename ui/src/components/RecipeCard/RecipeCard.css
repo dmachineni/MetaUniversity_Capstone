@@ -1,0 +1,13 @@
+.recipe-card-img {
+    height: 20%;
+    width:20%;
+    margin-right:5%;
+    margin-left:2%;
+
+}
+
+.recipe-card {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5%;
+}

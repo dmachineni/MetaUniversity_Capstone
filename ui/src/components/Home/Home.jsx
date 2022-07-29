@@ -7,18 +7,13 @@ import Categories from "../Categories/Categories"
 import { useState } from "react"
 
 export default function Home(props) {
-    const [summary, setSummary] = useState('')
-    const [description, setDescription] = useState('')
-    const [location, setLocation] = useState('')
-    const [startDateTime, setStartDateTime] = useState('')
-    const [endDateTime, setEndDateTime] = useState('')
-    const [signedIn, setSignedIn] = useState(false)
     return (
         <div className="home">
             <Search />
             <Categories categorizedRecipes = {props.categorizedRecipes} categories={props.categories} 
                 subCategories={props.subCategories} handleListDetails={props.handleListDetails}
-                idToken={props.idToken}/>
+                idToken={props.idToken} userLists={props.userLists} setUserListName={props.setUserListName} 
+                createList={props.createList} setNewListRecipes={props.setNewListRecipes} />
             <About />
             <ContactUs />
         </div>

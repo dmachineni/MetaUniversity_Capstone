@@ -6,22 +6,17 @@ h1{
 .left{
     display:flex;
     flex-direction:row;
-    
-    /* display:inline; */
-
-    /* overflow: wrap; */
-    /* justify-content: space-between; */
     float: right;  
 }
 
 .right {
     display: flex;
     flex-direction:row;
-    /* overflow: wrap; */
-    /* justify-content: space-between; */
+    justify-content: space-between;
     float: left;  
     overflow: scroll;
     flex-shrink:1;
+    padding:0px;
 }
 
 .logo-img{
@@ -31,7 +26,5 @@ h1{
 .navbar{
     color:#672020;
     margin-bottom: 70px;
-    max-height: 50%;  
-    /* display: flex;
-    flex-direction: row; */
+    max-height: 50%; 
 }

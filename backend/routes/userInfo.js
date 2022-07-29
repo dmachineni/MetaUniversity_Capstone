@@ -49,24 +49,49 @@ router.post('/create-tokens', async (req,res,next) => {
                         userObject.set("refreshToken", tokens.refresh_token)
                         userObject.set("userLists", [])
                         userObject.save()
-                            .catch(error => next(error))
+                            .then(userObject =>{
+                                const {sub,name,email} = idTokenClaims.data
+                                res.send({"objectId":userObject.id,message: "created a new user", "userLists":[], "tokens":tokens, sub, name, firstName:idTokenClaims.data.given_name, email})        
+                            })
+                            .catch(error => {next(error)})
 
-                        //TODO: this is causing a 500 error
-                            // query.equalTo("idToken", tokens.id_token);
-                            // const obj = await query.first();
-                        const {sub,name,firstName:given_name,email} = idTokenClaims.data
-                        res.send({message: "created a new user", "userLists":[], "tokens":tokens, sub, name, firstName, email})
                     } else {
-                        res.send({"message": "returning user", "userLists": result.get("userLists"),"id": result.get("objectId"),"tokens":tokens, "sub":idTokenClaims.data.sub, "name":result.get("name"), "firstName":result.get("firstName"), "email":result.get("email")})
+                        res.send({"message": "returning user", "userLists": result.get("userLists"),"objectId": result.id,"tokens":tokens, "sub":idTokenClaims.data.sub, "name":result.get("name"), "firstName":result.get("firstName"), "email":result.get("email")})
                     }
                 })
-                .catch (error => next(error))
+                .catch (error => {next(error)})
         // } else {
         //     res.send("not valid")
         // }
 
        
     } catch (error) {
+        {next(error)}
+    }
+})
+
+router.post('/create-new-user-list', (req,res,next) => {
+    try {
+        console.log("hi from backend", req.body)
+        const {listName} = req.body //string
+        let recipes = req.body.recipes //array of objs
+        recipes = [{"id":"CBrIXvVYEM","name":"Ube Halaya","thumbnail_url":"https://img.buzzfeed.com/tasty-app-user-assets-prod-us-east-1/recipes/33b31a7e1c77404faf157c5dd848ad49.jpeg","description":"Ube halaya, also known as “purple yam jam,” is a classic Filipino dessert that can be eaten on its own or used as a topping or filling in many other desserts. It is made with mashed up purple yams, evaporated milk, and ube or regular condensed milk for a silky smooth, rich texture. This creamy and vibrant dessert will wow your guests!"}]
+
+        const UserInfo = Parse.Object.extend("UserInfo");
+        const query = new Parse.Query(UserInfo);
+
+        query.get(req.body.objectId)
+            .then (async user => {
+                console.log("still working from backend",JSON.stringify({[listName]:recipes}))
+                user.add("userLists", {[listName]:recipes})
+                user.save()
+                console.log("hi from backend saved")
+                let updated = await user.get("userLists")
+                console.log("hi from backend updated")
+                res.send({"updatedUserLists":updated})
+            })
+            .catch (e => next(e))
+    } catch(error) {
         next(error)
     }
 })

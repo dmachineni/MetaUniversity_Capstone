@@ -6,7 +6,7 @@ import ListCard from "../ListCard/ListCard"
 export default function ListGrid(props) {
     return (
       <div className="list-grid">
-        {props.categoryRecipes.map((item,idx) => {
+        {props.categoryRecipes.map((item) => {
           let subCat = Object.keys(item)
 
           if (item[subCat[0]].length != 0) {

@@ -3,8 +3,8 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 var cors = require('cors')
 
-const store = require('./routes/recipes')
-const calendar = require('./routes/calendar')
+const recipes = require('./routes/recipes')
+const userInfo = require('./routes/userInfo')
 const { NotFoundError } = require('./utils/errors')
 
 const app = express()
@@ -12,8 +12,8 @@ const app = express()
 app.use(cors());
 app.use(morgan('tiny'))
 app.use(express.json())
-app.use ('/', store)
-app.use('/api', calendar)
+app.use ('/', recipes)
+app.use('/api', userInfo)
 
 app.use((req,res,next) => {
     next(new NotFoundError())
