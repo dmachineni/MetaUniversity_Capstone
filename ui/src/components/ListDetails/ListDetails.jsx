@@ -19,8 +19,6 @@ export default function ListDetails(props) {
             <ListDetailsHero subCatRecipes={props.subCatRecipes} category={props.category} subCategory={props.subCategory} categorizedRecipes={props.categorizedRecipes} profilePic={profilePic}/>
             <ListDetailsButtons />
             <RecipeGrid subCatRecipes={props.subCatRecipes}/>
-
-            {/* {props.category === "user lists" ? <Search />:""} */}
         </div>
     )
 }
