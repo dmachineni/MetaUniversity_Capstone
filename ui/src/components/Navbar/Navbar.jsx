@@ -11,19 +11,16 @@ let logoImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJ
 
 export default function Navbar(props) {
   const responseGoogle = async code => {
-    console.log(code)
     axios.post('http://localhost:3001/api/create-tokens', {code})
       .then( async response =>  {
         props.setIdToken(response.data.tokens.id_token)
         props.setAccessToken(response.data.tokens.access_token)
         props.setExpiryDate(response.data.tokens.expiry_date)
         props.setUserLists(response.data.userLists)
-        console.log('name',response.data.name)
         props.setName(response.data.name)
         props.setFirstName(response.data.firstName)
         props.setEmail(response.data.email)
         props.setSub(response.data.sub)
-        console.log('id',response.data.objectId)
         props.setObjectId(response.data.objectId)
       })
       .catch(error => {console.log(error)})

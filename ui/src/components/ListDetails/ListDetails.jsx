@@ -21,7 +21,7 @@ export default function ListDetails(props) {
             <ListDetailsButtons />
             <RecipeGrid subCatRecipes={props.subCatRecipes}/>
 
-            {props.category === "user lists" ? <Search />:console.log("")}
+            {props.category === "user lists" ? <Search />:""}
         </div>
     )
 }

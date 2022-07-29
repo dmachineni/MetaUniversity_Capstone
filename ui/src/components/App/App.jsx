@@ -38,7 +38,6 @@ export default function App() {
     async function requests() {
       await axios.get('http://localhost:3001/')
         .then(result => {
-          console.log('data',result)
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
         })
@@ -51,17 +50,14 @@ export default function App() {
   }, [])
 
   const handleListDetails = (cat, subCat, subCatRecipes) => {
-    console.log('handleListDetails function',cat,subCat)
     setCategory(cat)
     setSubCategory(subCat)
     setSubCatRecipes(subCatRecipes)
   }
 
   const createList = () => {
-    console.log("hi from app create list", objectId, userListName)
     axios.post('http://localhost:3001/api/create-new-user-list', {"listName":userListName, "recipes":newListRecipes, "objectId":objectId})
       .then (res => {
-        console.log("updated from app create list", JSON.stringify(res.data.updatedUserLists))
         setUserLists(res.data.updatedUserLists)
       })
       .catch (e => console.log(e))

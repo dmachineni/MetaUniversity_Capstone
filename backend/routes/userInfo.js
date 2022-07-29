@@ -50,24 +50,23 @@ router.post('/create-tokens', async (req,res,next) => {
                         userObject.set("userLists", [])
                         userObject.save()
                             .then(userObject =>{
-                                console.log("id from post create tokens", userObject.id)
                                 const {sub,name,email} = idTokenClaims.data
                                 res.send({"objectId":userObject.id,message: "created a new user", "userLists":[], "tokens":tokens, sub, name, firstName:idTokenClaims.data.given_name, email})        
                             })
-                            .catch(error => {console.log("from nested 2 catch");next(error)})
+                            .catch(error => {next(error)})
 
                     } else {
                         res.send({"message": "returning user", "userLists": result.get("userLists"),"objectId": result.id,"tokens":tokens, "sub":idTokenClaims.data.sub, "name":result.get("name"), "firstName":result.get("firstName"), "email":result.get("email")})
                     }
                 })
-                .catch (error => {console.log("from nested catch");next(error)})
+                .catch (error => {next(error)})
         // } else {
         //     res.send("not valid")
         // }
 
        
     } catch (error) {
-        {console.log("from catch");next(error)}
+        {next(error)}
     }
 })
 
