@@ -29,7 +29,7 @@ export default function Categories(props) {
                 <form className="list-info">
                     <label>Cookbook Name: 
                         <input className="name-input" type="text" name="name"
-                            placeholder="Cookbook Name" onChange={(e)=>{console.log(e.target.value);props.setUserListName(e.target.value)}}></input>
+                            placeholder="Cookbook Name" onChange={(e)=>props.setUserListName(e.target.value)}></input>
                     </label>
                     <Search setNewListRecipes={props.setNewListRecipes}/>
                     <button className="close" type="button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Close</button>
@@ -48,7 +48,7 @@ export default function Categories(props) {
             <div className="user-list-info">
                 <div className="my-lists">
                     <button className="new-user-list-button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Create new list!</button>
-                    {isPopupOpen ? generateNewListForm() : console.log("not opened")}
+                    {isPopupOpen ? generateNewListForm() : ""}
                     <h2>MY LISTS</h2>
                     <ListGrid category={"user lists"} categoryRecipes={props.userLists} handleListDetails={props.handleListDetails} />
                 </div>
