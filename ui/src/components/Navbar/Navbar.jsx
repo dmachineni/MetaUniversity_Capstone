@@ -61,6 +61,9 @@ export default function Navbar(props) {
             <h1 >About Us</h1>
             <h1 >Contact Us</h1>
             <h1 >Calendar</h1>
+            <Link to="/search" onClick={() => props.setSearchRecipes([])}>
+              <h1>Search</h1>
+            </Link>
             <h1 >
             {props.idToken === "" ?
               <div className="login">

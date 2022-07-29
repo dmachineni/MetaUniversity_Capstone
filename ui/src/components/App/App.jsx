@@ -8,6 +8,7 @@ import NotFound from "../NotFound/NotFound"
 import ListDetails from "../ListDetails/ListDetails"
 import {useState, useEffect} from "react"
 import axios from 'axios'
+import Search from "../Search/Search"
 
 export default function App() {
   const [categories, setCategories]  = useState(["brunch"])
@@ -32,6 +33,8 @@ export default function App() {
   //user list variables
   const [userListName, setUserListName] = useState("")
   const [newListRecipes, setNewListRecipes] = useState([])
+  //search variables
+  const [searchRecipes, setSearchRecipes] = useState([])
  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -63,13 +66,21 @@ export default function App() {
       .catch (e => console.log(e))
   }
 
+  const handleOnSearchChange = (searchInput) => {
+    axios.get(`http://localhost:3001/${searchInput}`)
+      .then (res => {
+        setSearchRecipes(res.data.recipes)
+      })
+      .catch (e => console.log(e))
+  }
+
   return (
     <div className="app">
       <BrowserRouter>
         <main>
           <Navbar idToken={idToken} setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} 
             setObjectId={setObjectId} setUserLists={setUserLists} setName={setName} setFirstName={setFirstName} setEmail={setEmail} 
-            setSub={setSub} />
+            setSub={setSub} setSearchRecipes={setSearchRecipes} />
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
@@ -83,6 +94,11 @@ export default function App() {
             <Route path="/list/:category/:listName" element={
               <div className='single-list'>
                 <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} pic={""} idToken={idToken}/>
+              </div>
+            }/>
+            <Route path="/search" element={
+              <div className='search-page'>
+                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} />
               </div>
             }/>
             <Route path="*" element={

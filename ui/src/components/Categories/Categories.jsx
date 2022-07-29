@@ -29,7 +29,7 @@ export default function Categories(props) {
                 <form className="list-info">
                     <label>Cookbook Name: 
                         <input className="name-input" type="text" name="name"
-                            placeholder="Cookbook Name" onChange={(e)=>{props.setUserListName(e.target.value)}}></input>
+                            placeholder="Cookbook Name" onChange={(e)=>props.setUserListName(e.target.value)}></input>
                     </label>
                     <Search setNewListRecipes={props.setNewListRecipes}/>
                     <button className="close" type="button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Close</button>

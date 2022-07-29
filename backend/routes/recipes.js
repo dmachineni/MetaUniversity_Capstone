@@ -41,43 +41,60 @@ router.get('/allrecipes', (req,res,next)  =>  {
             };
 
             axios.request(options)
-            .then(function (response) {
-                let recipes = response.data["results"]
-                //adding recipe to database
-                recipes.map((r) => {
-                    const All_Recipes = Parse.Object.extend("AllRecipes");
-                    const recipeObject = new All_Recipes();
+                .then(function (response) {
+                    let recipes = response.data["results"]
+                    //adding recipe to database
+                    recipes.map((r) => {
+                        const AllRecipes = Parse.Object.extend("AllRecipes");
+                        const recipeObject = new AllRecipes();
 
-                    recipeObject.set("name", r.name)
-                    recipeObject.set("thumbnailUrl", r["thumbnail_url"])
-                    recipeObject.set("totalTimeTier", r["total_time_tier"])
-                    recipeObject.set("totalTimeMinutes", r["total_time_minutes"]) 
-                    recipeObject.set("tags", r["tags"])
-                    if (r["description"] === undefined) {
-                        recipeObject.set("description", "")
-                    } else {
-                        recipeObject.set("description", r["description"])
-                    }
-                    if (r["description"] === undefined) {
-                        recipeObject.set("videoUrl", r["original_video_url"])
-                    } else {
-                        recipeObject.set("videoUrl", r["video_url"])
-                    }
-                    recipeObject.set("recipeId", r["id"])
-                    recipeObject.set("nutrition", r["nutrition"])
-                    recipeObject.set("instructions", r["instructions"])
-                    recipeObject.set("ingredientsInfo", r["sections"])
+                        recipeObject.set("name", r.name)
+                        recipeObject.set("thumbnailUrl", r["thumbnail_url"])
+                        recipeObject.set("totalTimeTier", r["total_time_tier"])
+                        recipeObject.set("totalTimeMinutes", r["total_time_minutes"]) 
+                        recipeObject.set("tags", r["tags"])
+                        if (r["description"] === undefined) {
+                            recipeObject.set("description", "")
+                        } else {
+                            recipeObject.set("description", r["description"])
+                        }
+                        if (r["description"] === undefined) {
+                            recipeObject.set("videoUrl", r["original_video_url"])
+                        } else {
+                            recipeObject.set("videoUrl", r["video_url"])
+                        }
+                        recipeObject.set("recipeId", r["id"])
+                        recipeObject.set("nutrition", r["nutrition"])
+                        recipeObject.set("instructions", r["instructions"])
+                        recipeObject.set("ingredientsInfo", r["sections"])
 
 
-                    recipeObject.save()
-                        .catch(error => next(error))
-                }) 
-            })
+                        recipeObject.save()
+                            .catch(error => next(error))
+                    }) 
+                })
+                .catch(e => next(e))
         }
         res.status(200).send("success")
 
     } catch(error) {
         next(error)
+    }
+})
+
+router.get('/:searchInput', (req,res,next) => {
+    try {
+        const AllRecipes = Parse.Object.extend("AllRecipes");
+        const query = new Parse.Query(AllRecipes);
+        query.fullText('name', req.params.searchInput);
+        query.find()
+            .then (recipes=>{
+                res.send({recipes:recipes})
+            })
+            .catch (e => next(e))
+
+    } catch(e) {
+        next(e)
     }
 })
 
