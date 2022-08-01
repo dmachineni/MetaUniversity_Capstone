@@ -68,7 +68,7 @@ export default function Navbar(props) {
           <h1 >About Us</h1>
           <h1 >Contact Us</h1>
           <h1 >Calendar</h1>
-          <Link to="/">
+          <Link to="/search">
             <h1>Search</h1>
           </Link>
           <h1 >

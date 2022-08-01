@@ -2,8 +2,6 @@ import "./Categories.css"
 import React from "react"
 import ListGrid from "../ListGrid/ListGrid"
 import { useState } from "react" 
-// import Search from "../Search/Search"
-
 
 export default function Categories(props) {
     const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -18,7 +16,6 @@ export default function Categories(props) {
                         <input className="name-input" type="text" name="name"
                             placeholder="Cookbook Name" onChange={(e)=>props.setUserListName(e.target.value)}></input>
                     </label>
-                    {/* <Search setNewListRecipes={props.setNewListRecipes}/> */}
                     <button className="close" type="button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Close</button>
                     <button className="submit"  onClick={(e)=> {
                         e.preventDefault()
@@ -40,7 +37,7 @@ export default function Categories(props) {
                     <ListGrid category={"user lists"} categoryRecipes={props.userLists} handleListDetails={props.handleListDetails} 
                         setChosenRecipe={props.setChosenRecipe} userLists={props.userLists} handleChooseRecipe={props.handleChooseRecipe}
                         setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes} 
-                        handleAddRecipe={props.handleAddRecipe}/>
+                        handleAddRecipe={props.handleAddRecipe} idToken={props.idToken}/>
                 </div>
                 {handleGeneralCategories()}
             </div>
@@ -55,7 +52,7 @@ export default function Categories(props) {
                         <h2>{category.toUpperCase()}</h2>
                         <ListGrid category= {category} categoryRecipes = {props.categorizedRecipes[category]} 
                             handleListDetails={props.handleListDetails} handleChooseRecipe={props.handleChooseRecipe}
-                            userLists={props.userLists}/>
+                            userLists={props.userLists} idToken={props.idToken}/>
                     </div>
                 )
             })

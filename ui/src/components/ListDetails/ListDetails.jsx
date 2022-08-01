@@ -10,7 +10,6 @@ export default function ListDetails(props) {
     if (props.pic === "") {
         let len = props.subCatRecipes.length
         let randomNum = Math.floor(Math.random() * len);
-        console.log(props.subCatRecipes[randomNum].thumbnailUrl)
         props.subCatRecipes[randomNum].thumbnailUrl === undefined ? 
             profilePic = props.subCatRecipes[randomNum].thumbnail_url : 
             profilePic = props.subCatRecipes[randomNum].thumbnailUrl
@@ -23,7 +22,7 @@ export default function ListDetails(props) {
             <ListDetailsHero subCatRecipes={props.subCatRecipes} category={props.category} subCategory={props.subCategory} categorizedRecipes={props.categorizedRecipes} profilePic={profilePic}/>
             <ListDetailsButtons />
             <RecipeGrid subCatRecipes={props.subCatRecipes} userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 
-                handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe}/>
+                handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe} idToken={props.idToken}/>
         </div>
     )
 }

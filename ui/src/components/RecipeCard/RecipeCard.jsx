@@ -12,9 +12,11 @@ export default function RecipeCard(props) {
         <div className="recipe-card">
             <img className="recipe-card-img" src={props.pic} onClick={()=> setRecipePopup(!recipePopup)}></img>
             <p className="recipe-card-name">{props.name}</p>
-            <button className="search-list-add" onClick={(e) => {props.setChosenRecipe(props.recipe); setAddToPopup(true)}}>
-                +
-            </button>
+            {props.idToken === "" ? "" : 
+                <button className="search-list-add" onClick={(e) => {props.setChosenRecipe(props.recipe); setAddToPopup(true)}}>
+                    +
+                </button>
+            }
             <Popup setRecipePopup={setRecipePopup} recipePopup={recipePopup} recipe={props.recipe}/>
             <AddToPopup setAddToPopup={setAddToPopup} addToPopup={addToPopup} recipe={props.recipe} userLists={props.userLists} 
                 setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 

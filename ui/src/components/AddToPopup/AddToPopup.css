@@ -14,7 +14,7 @@
 .recipe-popup-inner {
     position: relative;
     padding: 32px;
-    width: 10%;
+    width: 100%;
     max-width: 640px;
     background-color: #FFF;
 }

@@ -116,11 +116,11 @@ export default function App() {
                   handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe}/>
               </div>
             }/>
-            <Route path="/search" element={
+            <Route path="/search" onClick={()=>alert("boo")} element={
               <div className='search-page'>
-                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setChosenRecipe={setChosenRecipe} 
+                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setSearchRecipes={setSearchRecipes} setChosenRecipe={setChosenRecipe} 
                   handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
-                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe}/>
+                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken}/>
               </div>
             }/>
             <Route path="*" element={

@@ -52,9 +52,11 @@ export default function ListCard(props) {
           <p className = "search-list-name" >
             {props.recipe.name}
           </p>
-          <button className="search-list-add" onClick={(e) => {props.setChosenRecipe(props.recipe); setAddToPopup(true)}}>
-            +
-          </button>
+          {props.idToken === "" ? "":
+            <button className="search-list-add" onClick={(e) => {props.setChosenRecipe(props.recipe); setAddToPopup(true)}}>
+              +
+            </button>}
+          
         </div>
         
 

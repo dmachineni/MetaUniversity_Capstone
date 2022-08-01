@@ -11,7 +11,7 @@ export default function RecipeGrid(props) {
                     {recipe.thumbnailUrl === undefined ? pic = recipe.thumbnail_url : pic = recipe.thumbnailUrl}
                     return <RecipeCard pic={pic} name={recipe.name} recipe={recipe} userLists={props.userLists}
                         setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 
-                        handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe}/>
+                        handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe} idToken={props.idToken}/>
                 })
             }
         </div>

@@ -1,8 +1,12 @@
 import React from "react"
 import "./Search.css"
 import ListCard from "../ListCard/ListCard"
+import { useEffect } from "react"
 
 export default function Search(props) {
+    useEffect(() => {
+        props.setSearchRecipes([])
+      }, [])
     
     return (
         <div className="search">
@@ -22,7 +26,7 @@ export default function Search(props) {
                     return(
                         <ListCard category="search" recipe={rec} setChosenRecipe={props.setChosenRecipe} handleChooseRecipe={props.handleChooseRecipe}  
                             userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes}
-                            setUserListName={props.setUserListName} handleAddRecipe={props.handleAddRecipe}/>
+                            setUserListName={props.setUserListName} handleAddRecipe={props.handleAddRecipe} idToken={props.idToken}/>
                     )
                 })}
             </div>
