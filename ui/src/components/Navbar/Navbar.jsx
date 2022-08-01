@@ -30,6 +30,11 @@ export default function Navbar(props) {
     props.setIdToken("")
     props.setAccessToken("")
     props.setExpiryDate("")
+    props.setUserLists([])
+    props.setName("")
+    props.setFirstName("")
+    props.setEmail("")
+    props.setSub("")
     props.setObjectId("")
   }
 
@@ -57,26 +62,25 @@ export default function Navbar(props) {
           </Link>
         </div>
         <div className="left">
+          <Link to="/">
             <h1 >Home</h1>
-            <h1 >About Us</h1>
-            <h1 >Contact Us</h1>
-            <h1 >Calendar</h1>
-            <Link to="/search" onClick={() => props.setSearchRecipes([])}>
-              <h1>Search</h1>
-            </Link>
-            <h1 >
-            {props.idToken === "" ?
-              <div className="login">
-                <GoogleLogin clientId={clientId} buttonText='Log in to get started!' onSuccess={responseGoogle} onFailure={responseError}
-                  cookiePolicy={'single_host_origin'} responseType="code" accessType="offline" scope="openid email profile https://www.googleapis.com/auth/calendar"/>
-              </div>
-              : 
-              <button className="log-out button" onClick={handleLogOut}>Log Out</button>
-            }
-            </h1> 
-
-            
-            
+          </Link>
+          <h1 >About Us</h1>
+          <h1 >Contact Us</h1>
+          <h1 >Calendar</h1>
+          <Link to="/">
+            <h1>Search</h1>
+          </Link>
+          <h1 >
+          {props.idToken === "" ?
+            <div className="login">
+              <GoogleLogin clientId={clientId} buttonText='Log in to get started!' onSuccess={responseGoogle} onFailure={responseError}
+                cookiePolicy={'single_host_origin'} responseType="code" accessType="offline" scope="openid email profile https://www.googleapis.com/auth/calendar"/>
+            </div>
+            : 
+            <button className="log-out button" onClick={handleLogOut}>Log Out</button>
+          }
+          </h1> 
         </div>
     </div>
   )

@@ -4,22 +4,42 @@ import { Link } from "react-router-dom"
 import Popup from "../Popup/Popup"
 import { useState } from "react"
 import AddToPopup from "../AddToPopup/AddToPopup"
+import GoToSearchPopup from "../GoToSearchPopup/GoToSearchPopup"
 
 export default function ListCard(props) {
   const [recipePopup, setRecipePopup] = useState(false)
   const [addToPopup, setAddToPopup] = useState(false)
+  const [goToSearchPopup, setGoToSearchPopup] = useState(false)
+
+  const emptyList = () => {
+    return (
+        <div className="">
+          <img className="subcat-list-card-img" src={"https://static.thenounproject.com/png/51422-200.png"} onClick={() => setGoToSearchPopup(true)}></img>   
+          <GoToSearchPopup goToSearchPopup={goToSearchPopup} setGoToSearchPopup={setGoToSearchPopup}/>
+          
+        </div>
+    )
+  }
+
+  const nonEmptyList = () => {
+    return (
+      <Link onClick={() => props.handleListDetails(props.category, props.subCat, props.subCatRecipes)} className = "list-img" to={`/list/${props.category}/${props.subCat}`}>
+          {props.subCatRecipes[0]["thumbnailUrl"] === undefined ?
+            <img className="subcat-list-card-img" src={props.subCatRecipes[0]["thumbnail_url"]}></img> :
+            <img className="subcat-list-card-img" src={props.subCatRecipes[0]["thumbnailUrl"]}></img> 
+          }  
+      </Link>
+    )
+  }
 
   const Subcat = () => {
     return (
       <div className="subcat-list-card">
-        <Link onClick={() => props.handleListDetails(props.category, props.subCat, props.subCatRecipes)} className = "list-img" to={`/list/${props.category}/${props.subCat}`}>
-          <img className="subcat-list-card-img" src={props.subCatRecipes[0]["thumbnail_url"]}></img>  
-        </Link>
-  
+        {props.subCatRecipes.length === 0 ? emptyList() : nonEmptyList()}
+        
         <p className = "subcat-list-name" >
           {props.subCat}
         </p>
-  
       </div>
     )
   }
@@ -50,6 +70,7 @@ export default function ListCard(props) {
   return (
     <div className="list-card">
       {props.category === "search" ? Search():Subcat()}
+      
     </div>
   )
 

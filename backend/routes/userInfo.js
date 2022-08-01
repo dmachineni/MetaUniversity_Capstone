@@ -74,7 +74,6 @@ router.post('/create-new-user-list', (req,res,next) => {
     try {
         const {listName} = req.body //string
         let recipes = req.body.recipes //array of objs
-        recipes = [{"id":"CBrIXvVYEM","name":"Ube Halaya","thumbnail_url":"https://img.buzzfeed.com/tasty-app-user-assets-prod-us-east-1/recipes/33b31a7e1c77404faf157c5dd848ad49.jpeg","description":"Ube halaya, also known as “purple yam jam,” is a classic Filipino dessert that can be eaten on its own or used as a topping or filling in many other desserts. It is made with mashed up purple yams, evaporated milk, and ube or regular condensed milk for a silky smooth, rich texture. This creamy and vibrant dessert will wow your guests!"}]
 
         const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
@@ -107,6 +106,9 @@ router.post('/add-recipe-to-user-list', (req,res,next) => {
                 })
                 user.set("userLists", prev)
                 user.save()
+
+                let updated = await user.get("userLists")
+                res.send({"updatedUserLists":updated})
             })
             .catch(e => next(e))
         

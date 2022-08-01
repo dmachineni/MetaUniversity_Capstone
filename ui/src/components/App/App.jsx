@@ -60,7 +60,6 @@ export default function App() {
   }
 
   const createList = () => {
-    console.log("from create list in app")
     axios.post('http://localhost:3001/api/create-new-user-list', {"listName":userListName, "recipes":newListRecipes, "objectId":objectId})
       .then (res => {
         setUserLists(res.data.updatedUserLists)
@@ -69,7 +68,11 @@ export default function App() {
   }
 
   const handleOnSearchChange = (searchInput) => {
-    axios.get(`http://localhost:3001/${searchInput}`)
+    if(searchInput === "") {
+      return
+    }
+
+    axios.get(`http://localhost:3001/search/${searchInput}`)
       .then (res => {
         setSearchRecipes(res.data.recipes)
       })
@@ -81,7 +84,6 @@ export default function App() {
   }
 
   const handleAddRecipe = (listName) => {
-    console.log("from handle On Search Change in app",listName,chosenRecipe)
     axios.post('http://localhost:3001/api/add-recipe-to-user-list', {"recipe":chosenRecipe, "objectId":objectId, "listName":listName})
       .then (res => {
         setUserLists(res.data.updatedUserLists)
@@ -110,7 +112,8 @@ export default function App() {
             <Route path="/list/:category/:listName" element={
               <div className='single-list'>
                 <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} 
-                  pic={""} idToken={idToken}/>
+                  pic={""} idToken={idToken} userLists={userLists} setNewListRecipes={setNewListRecipes} createList ={createList} setUserListName={setUserListName} 
+                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe}/>
               </div>
             }/>
             <Route path="/search" element={

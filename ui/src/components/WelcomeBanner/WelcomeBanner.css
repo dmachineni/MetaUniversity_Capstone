@@ -1,12 +1,22 @@
 .banner{
-    background:url("https://thumbs.dreamstime.com/b/world-cuisine-chicken-recipes-collage-menu-background-214329316.jpg"); 
+    background-image: url("https://thumbs.dreamstime.com/b/world-cuisine-chicken-recipes-collage-menu-background-214329316.jpg"); 
+    background-size: cover;
+    position: relative;
     height: 50vh;
     width: 100%;
     background-size: cover;
-    position: relative;
+    /* background:url("https://thumbs.dreamstime.com/b/world-cuisine-chicken-recipes-collage-menu-background-214329316.jpg"); 
+    height: 50vh;
+    width: 100%;
+    background-size: cover;
+    position: relative; */
 }
 
 .welcome-text {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    transform: translateY(-50%);
     position: absolute;
     top: 50%;
     left:50%;
@@ -17,7 +27,8 @@
     border-radius:8px;
     margin:0;
     text-align: center;
-    font-size: 6em;
+    font-size: 100px;
+    /* font-size: 6em; */
     mix-blend-mode: screen;
     opacity: 0.9;
 }

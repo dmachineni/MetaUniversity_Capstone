@@ -82,7 +82,7 @@ router.get('/allrecipes', (req,res,next)  =>  {
     }
 })
 
-router.get('/:searchInput', (req,res,next) => {
+router.get('/search/:searchInput', (req,res,next) => {
     try {
         const AllRecipes = Parse.Object.extend("AllRecipes");
         const query = new Parse.Query(AllRecipes);

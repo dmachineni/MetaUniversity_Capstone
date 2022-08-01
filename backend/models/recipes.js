@@ -92,11 +92,22 @@ class Recipes {
                   let name = await parseObj.get("name")
                   let pic = await parseObj.get("thumbnailUrl")
                   let description = await parseObj.get("description")
+                  let totalTimeTier = await parseObj.get("totalTimeTier")
+                  let totalTimeMinutes = await parseObj.get("totalTimeMinutes")
+                  let instructions = await parseObj.get("instructions")
+                  let videoUrl = await parseObj.get("videoUrl")
+                  let ingredientsInfo = await parseObj.get("ingredientsInfo")
+
                   let obj = {
-                    "id":id,
-                    "name":name,
-                    "thumbnail_url":pic,
-                    "description":description
+                    id:id,
+                    name:name,
+                    thumbnail_url:pic,
+                    description:description,
+                    totalTimeTier:totalTimeTier,
+                    totalTimeMinutes:totalTimeMinutes,
+                    instructions:instructions,
+                    videoUrl:videoUrl,
+                    ingredientsInfo:ingredientsInfo
                   }
                   toAdd[subCat].push(obj)
                 }

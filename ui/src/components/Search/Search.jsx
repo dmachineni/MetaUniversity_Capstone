@@ -9,15 +9,11 @@ export default function Search(props) {
             <form className="search-bar">
                 <label> 
                     <div className="search-here-text">Search Here: </div>
-                    <input label = "Search Here" type = "text" id = "search" placeholder="Search for a recipe here" onChange={(e) => {
-                        // e.preventDefault()
-                        props.handleOnSearchChange(e.target.value)}}
-                    ></input>
-                    <button className="submit-search-input" onClick={(e) => {
-                        const node = document.querySelector("#search")
+                    <input label = "Search Here" type = "text" id = "in a fsearch" placeholder="Search for a recipe here" onChange={(e) => {
                         e.preventDefault()
-                        props.handleOnSearchChange(node.value)
-                    }}>Search</button>
+                        props.handleOnSearchChange(e.target.value)}}
+                        onSubmit={(e) => e.preventDefault()}
+                    ></input>
                 </label>
             </form>
 
