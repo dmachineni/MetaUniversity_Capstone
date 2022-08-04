@@ -30,12 +30,16 @@ export default function App() {
   const [firstName, setFirstName] = useState("")
   const [email, setEmail] = useState("")
   const [sub, setSub] = useState("")
+  const [code,setCode] = useState("")
   //user list variables
   const [userListName, setUserListName] = useState("")
   const [newListRecipes, setNewListRecipes] = useState([])
   //search variables
   const [searchRecipes, setSearchRecipes] = useState([])
   const [chosenRecipe, setChosenRecipe] = useState({})
+  //google calendar event variables 
+  const [startDateTime, setStartDateTime] = useState()
+  const [endDateTime, setEndDateTime] = useState()
  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -44,7 +48,7 @@ export default function App() {
         .then(result => {
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
-        })
+        }) 
         .catch(e=>setError(e))
     }
     if (!retrievedRecipes) {
@@ -91,13 +95,27 @@ export default function App() {
       .catch (e => console.log(e))
   }
 
+  const handleCreateCalendarEvent = async (summary,description) => {
+    axios.post('http://localhost:3001/api/create-event',{
+      summary:summary,
+      description:description,
+      startDateTime:startDateTime, 
+      endDateTime:endDateTime,
+      objectId:objectId,
+      access_token:accessToken,
+      expiryDate:expiryDate
+    })
+      .then(res => {})
+      .catch(e => console.log(e))
+  }
+
   return (
     <div className="app">
       <BrowserRouter>
         <main>
           <Navbar idToken={idToken} setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} 
             setObjectId={setObjectId} setUserLists={setUserLists} setName={setName} setFirstName={setFirstName} setEmail={setEmail} 
-            setSub={setSub} setSearchRecipes={setSearchRecipes} />
+            setSub={setSub} setSearchRecipes={setSearchRecipes} setCode={setCode}/>
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
@@ -113,7 +131,7 @@ export default function App() {
               <div className='single-list'>
                 <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} 
                   pic={""} idToken={idToken} userLists={userLists} setNewListRecipes={setNewListRecipes} createList ={createList} setUserListName={setUserListName} 
-                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe}/>
+                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe} setStartDateTime={setStartDateTime} setEndDateTime={setEndDateTime} handleCreateCalendarEvent={handleCreateCalendarEvent}/>
               </div>
             }/>
             <Route path="/search" onClick={()=>alert("boo")} element={

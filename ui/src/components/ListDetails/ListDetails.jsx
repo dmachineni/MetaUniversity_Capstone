@@ -19,10 +19,14 @@ export default function ListDetails(props) {
 
     return (
         <div className="single-list">
-            <ListDetailsHero subCatRecipes={props.subCatRecipes} category={props.category} subCategory={props.subCategory} categorizedRecipes={props.categorizedRecipes} profilePic={profilePic}/>
-            <ListDetailsButtons />
-            <RecipeGrid subCatRecipes={props.subCatRecipes} userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 
-                handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe} idToken={props.idToken}/>
+            <ListDetailsHero subCatRecipes={props.subCatRecipes} category={props.category} subCategory={props.subCategory} 
+                categorizedRecipes={props.categorizedRecipes} profilePic={profilePic}/>
+            <ListDetailsButtons subCatRecipes={props.subCatRecipes} setStartDateTime={props.setStartDateTime} 
+                setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent}/>
+            <RecipeGrid subCatRecipes={props.subCatRecipes} userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} 
+                createList ={props.createList} setUserListName={props.setUserListName} handleAddRecipe={props.handleAddRecipe} 
+                setChosenRecipe={props.setChosenRecipe} idToken={props.idToken} setStartDateTime={props.setStartDateTime} 
+                setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent}/>
         </div>
     )
 }

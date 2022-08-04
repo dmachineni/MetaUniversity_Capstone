@@ -11,6 +11,7 @@ let logoImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJ
 
 export default function Navbar(props) {
   const responseGoogle = async code => {
+    props.setCode(code)
     axios.post('http://localhost:3001/api/create-tokens', {code})
       .then( async response =>  {
         props.setIdToken(response.data.tokens.id_token)

@@ -78,7 +78,6 @@ class Recipes {
             let matched = false
 
             tags.map(async tag => {
-              //TODO: how to test whether tag.name and tag.type exists?
               if(!matched) {
                 if(tag.name.toLowerCase() === subCat) {  
                   matched = true
@@ -119,7 +118,6 @@ class Recipes {
         return toReturn
     }
 
-    //TODO: need to rethink this logic
     static modifyCategories(addCategories, addSubCategories) {
       if(addCategories !== undefined && addCategories.length >= 1) {
         addCategories.forEach(newCat => {

@@ -17,7 +17,8 @@ export default function RecipeCard(props) {
                     +
                 </button>
             }
-            <Popup setRecipePopup={setRecipePopup} recipePopup={recipePopup} recipe={props.recipe}/>
+            <Popup setRecipePopup={setRecipePopup} recipePopup={recipePopup} recipe={props.recipe} setStartDateTime={props.setStartDateTime} 
+                setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent}/>
             <AddToPopup setAddToPopup={setAddToPopup} addToPopup={addToPopup} recipe={props.recipe} userLists={props.userLists} 
                 setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 
                 handleAddRecipe={props.handleAddRecipe}/>
