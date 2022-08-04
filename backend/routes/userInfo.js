@@ -34,7 +34,8 @@ router.post('/create-tokens', async (req,res,next) => {
     try {
         const {code} = req.body
         const {tokens} = await oauth2Client.getToken(code)
-        verify(tokens.id_token).catch(console.log(error));
+        verify(tokens.id_token).catch((error) => console.log(error));
+
         const UserInfo = Parse.Object.extend("UserInfo");
         const query = new Parse.Query(UserInfo);
         let idTokenClaims = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)

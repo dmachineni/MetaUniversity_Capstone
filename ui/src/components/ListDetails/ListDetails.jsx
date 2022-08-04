@@ -26,7 +26,7 @@ export default function ListDetails(props) {
             <RecipeGrid subCatRecipes={props.subCatRecipes} userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} 
                 createList ={props.createList} setUserListName={props.setUserListName} handleAddRecipe={props.handleAddRecipe} 
                 setChosenRecipe={props.setChosenRecipe} idToken={props.idToken} setStartDateTime={props.setStartDateTime} 
-                setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent}/>
+                setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent} endDateTime={props.endDateTime}/>
         </div>
     )
 }

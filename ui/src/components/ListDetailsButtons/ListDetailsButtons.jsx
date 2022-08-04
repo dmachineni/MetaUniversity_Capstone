@@ -1,7 +1,6 @@
 import "./ListDetailsButtons.css"
 import * as React from "react"
 import { useState } from "react"
-import GoogleCalEventForm from "../GoogleCalEventForm/GoogleCalEventForm"
 import Popup from "../Popup/Popup"
 
 export default function ListDetailsButtons(props) {
@@ -26,6 +25,3 @@ export default function ListDetailsButtons(props) {
         </div>
     )
 }
-
-{/* <GoogleCalEventForm setIsFormOpen={setIsFormOpen} setStartDateTime={props.setStartDateTime} setEndDateTime={props.setEndDateTime} 
-                            setRecipePopup={props.setRecipePopup} handleCreateCalendarEvent={props.handleCreateCalendarEvent} recipe={props.recipe}/> */}

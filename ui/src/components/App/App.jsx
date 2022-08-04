@@ -95,12 +95,24 @@ export default function App() {
       .catch (e => console.log(e))
   }
 
-  const handleCreateCalendarEvent = async (summary,description) => {
+  const handleCreateCalendarEvent = async (summary,description,recipe) => {
+    if(typeof endDateTime === "number") {
+      let date = new Date(startDateTime) 
+      let startMilliseconds = date.getTime()
+      let totalMilliseconds = startMilliseconds + endDateTime*60000
+      let newEndDate = new Date(totalMilliseconds)
+      handleCreateCalendarEventPost(summary,description, newEndDate)
+    } else {
+      handleCreateCalendarEventPost(summary,description, endDateTime)
+    }
+  }
+
+  const handleCreateCalendarEventPost = async (summary,description,endDate) => {
     axios.post('http://localhost:3001/api/create-event',{
       summary:summary,
       description:description,
-      startDateTime:startDateTime, 
-      endDateTime:endDateTime,
+      startDateTime: startDateTime, 
+      endDateTime:endDate,
       objectId:objectId,
       access_token:accessToken,
       expiryDate:expiryDate
@@ -131,7 +143,8 @@ export default function App() {
               <div className='single-list'>
                 <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} 
                   pic={""} idToken={idToken} userLists={userLists} setNewListRecipes={setNewListRecipes} createList ={createList} setUserListName={setUserListName} 
-                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe} setStartDateTime={setStartDateTime} setEndDateTime={setEndDateTime} handleCreateCalendarEvent={handleCreateCalendarEvent}/>
+                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe} setStartDateTime={setStartDateTime} setEndDateTime={setEndDateTime} 
+                  handleCreateCalendarEvent={handleCreateCalendarEvent} endDateTime={endDateTime}/>
               </div>
             }/>
             <Route path="/search" onClick={()=>alert("boo")} element={
