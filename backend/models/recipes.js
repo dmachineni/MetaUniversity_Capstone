@@ -96,6 +96,10 @@ class Recipes {
                   let instructions = await parseObj.get("instructions")
                   let videoUrl = await parseObj.get("videoUrl")
                   let ingredientsInfo = await parseObj.get("ingredientsInfo")
+                  let allergens = await parseObj.get("allergens")
+                  let ingredients = await parseObj.get("ingredients")
+
+
 
                   let obj = {
                     id:id,
@@ -106,7 +110,9 @@ class Recipes {
                     totalTimeMinutes:totalTimeMinutes,
                     instructions:instructions,
                     videoUrl:videoUrl,
-                    ingredientsInfo:ingredientsInfo
+                    ingredientsInfo:ingredientsInfo,
+                    allergens:allergens,
+                    ingredients:ingredients
                   }
                   toAdd[subCat].push(obj)
                 }
