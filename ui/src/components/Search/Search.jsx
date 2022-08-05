@@ -1,7 +1,7 @@
 import React from "react"
 import "./Search.css"
 import ListCard from "../ListCard/ListCard"
-import { useEffect, useState, useRef} from "react"
+import { useEffect, useState} from "react"
 
 export default function Search(props) {
     const [term, setTerm] = useState('');
@@ -39,8 +39,8 @@ export default function Search(props) {
             </form>
 
             <div className="search-results" >
-                {props.lastSearchPromise.current === props.currentPromise.current && props.searchRecipes !== undefined ?
-                    props.searchRecipes.map((rec, idx) => {
+                {props.searchRecipes !== undefined ? 
+                    props.searchRecipes.map((rec) => {
                         return(
                             <ListCard category="search" recipe={rec} setChosenRecipe={props.setChosenRecipe} handleChooseRecipe={props.handleChooseRecipe}  
                                 userLists={props.userLists} setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes}
