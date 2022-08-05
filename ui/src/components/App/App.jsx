@@ -6,7 +6,7 @@ import './App.css'
 import Home from '../Home/Home'
 import NotFound from "../NotFound/NotFound"
 import ListDetails from "../ListDetails/ListDetails"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 import axios from 'axios'
 import Search from "../Search/Search"
 
@@ -37,6 +37,8 @@ export default function App() {
   //search variables
   const [searchRecipes, setSearchRecipes] = useState([])
   const [chosenRecipe, setChosenRecipe] = useState({})
+  const lastSearchPromise = useRef(null)
+  const currentPromise = useRef(null)
   //google calendar event variables 
   const [startDateTime, setStartDateTime] = useState()
   const [endDateTime, setEndDateTime] = useState()
@@ -44,12 +46,16 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function requests() {
-      await axios.get('http://localhost:3001/')
-        .then(result => {
+      let currPromise = axios.get('http://localhost:3001/')
+
+      lastSearchPromise.current = currPromise
+      currentPromise.current = currPromise
+
+      currentPromise .then(result => {
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
         }) 
-        .catch(e=>setError(e))
+      currentPromise.catch(e=>setError(e))
     }
     if (!retrievedRecipes) {
       requests()
@@ -151,7 +157,7 @@ export default function App() {
               <div className='search-page'>
                 <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setSearchRecipes={setSearchRecipes} setChosenRecipe={setChosenRecipe} 
                   handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
-                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken}/>
+                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken} lastSearchPromise={lastSearchPromise} currentPromise={currentPromise}/>
               </div>
             }/>
             <Route path="*" element={
