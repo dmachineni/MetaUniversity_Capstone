@@ -10,9 +10,8 @@ export default function ListDetails(props) {
     if (props.pic === "") {
         let len = props.subCatRecipes.length
         let randomNum = Math.floor(Math.random() * len);
-        props.subCatRecipes[randomNum].thumbnailUrl === undefined ? 
-            profilePic = props.subCatRecipes[randomNum].thumbnail_url : 
-            profilePic = props.subCatRecipes[randomNum].thumbnailUrl
+        const randomRecipe = props.subCatRecipes[randomNum]
+        profilePic = randomRecipe.thumbnailUrl === undefined ? randomRecipe.thumbnail_url : randomRecipe.thumbnailUrl
     } else {
         profilePic = props.pic
     }
