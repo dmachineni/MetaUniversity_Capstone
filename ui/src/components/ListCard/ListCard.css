@@ -31,3 +31,18 @@
   background-repeat: no-repeat;
   transition: 0.5s;
 }
+
+.search-list-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search-list-name {
+  font-weight: bold;
+}
+
+.search-list-add {
+  height:30px;
+  align-self: center;
+}

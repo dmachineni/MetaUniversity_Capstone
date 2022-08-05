@@ -7,7 +7,13 @@ export default function RecipeGrid(props) {
         <div className="recipe-grid">
             {   
                 props.subCatRecipes.map((recipe) => {
-                    return <RecipeCard pic={recipe.thumbnail_url} name={recipe.name} recipe={recipe}/>
+                    let pic
+                    {recipe.thumbnailUrl === undefined ? pic = recipe.thumbnail_url : pic = recipe.thumbnailUrl}
+                    return <RecipeCard pic={pic} name={recipe.name} recipe={recipe} userLists={props.userLists}
+                        setNewListRecipes={props.setNewListRecipes} createList ={props.createList} setUserListName={props.setUserListName} 
+                        handleAddRecipe={props.handleAddRecipe} setChosenRecipe={props.setChosenRecipe} idToken={props.idToken}
+                        setStartDateTime={props.setStartDateTime} setEndDateTime={props.setEndDateTime} handleCreateCalendarEvent={props.handleCreateCalendarEvent}
+                        endDateTime={props.endDateTime}/>
                 })
             }
         </div>

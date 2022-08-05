@@ -1,8 +1,8 @@
-.recipe-popup {
+.add-to-popup {
     position: fixed;
     top:0;
     left:0;
-    width:100%;
+    width:100vh;
     height:100vh;
     background-color: rgba(0,0,0,0.2);
 
@@ -23,4 +23,18 @@
     position: absolute;
     top:16px;
     right:16px;
+}
+
+.add-to-options{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.add-to-new-list {
+    margin-top: 10px;
+}
+
+.add-to-existing-list{
+    margin-top: 10px;
 }
