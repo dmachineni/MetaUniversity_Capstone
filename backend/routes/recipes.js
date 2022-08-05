@@ -90,7 +90,7 @@ const nutsAllergenIngredients = []
 const listOfAllergens = ["milk"]
 const allergenIngredients = [milkAllergenIngredients]
 
-
+//recursive function to check if the value is contained in the array
 function checkVal(array, value) {
     return array.some(function(entry) {
         if (Array.isArray(entry)) {
