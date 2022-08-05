@@ -3,9 +3,10 @@ const storage = require('../data/storage.js');
 const router = express.Router()
 const info = require('../models/recipes');
 const axios = require('axios')
+const {PARSE_APP_ID, PARSE_JAVASCRIPT_KEY} = require('../auth-keys')
 
 const Parse = require('parse/node')
-Parse.initialize("WrhhT0n3PD3RkdESL6pAsvqN86YDNS9eP0v1VdZg", "WliFyOgGrffxxYv0IfvChkvx8a1ByDYKY7tadIDW")
+Parse.initialize(PARSE_APP_ID,PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = "https://parseapi.back4app.com"
 
 
