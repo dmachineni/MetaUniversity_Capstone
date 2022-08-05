@@ -4,21 +4,22 @@
 - Allows users to customize and create lists of activities, grouped based on general categories. The user can also randomly generate an activity 
 from the list based on a time parameter. The website will automatically add the activity to the user's calendar on the desired day and/or time. 
 
-## Features
-- Users can create profiles 
-- users can view generated "playlists" based on set categories (Ex: time, allergen-free, vegetarian)
-- Ability to create and customize list of activities
-- Generate a random activity from a chosen list 
-- Automatically add activity to user's calendar 
-- Check calendar app to see what time scheduling the activity is possible
+## Core Features
+- Search bar that filters recipes based on user input
+- User can view automatically generated recipe lists based on set categories (Ex: time, type of meal)
+- Users can view view recipe details such as instructions, ingredients, and total time
+- User Login via google
+  - Used authentication tool, OAuth2, with google api to allow users to log in with their google accounts
+- Logged in users can…
+  - create new lists
+  - add recipes to their own list
+  - Add either a chosen recipe or a randomly generated recipe (from specified category) to their google calendar given a start time
+  - Determines the total time it takes to make a given recipe and updates the end time of the google calendar event automatically
 
 ## Stretch features
-- Add activity to the calendar of a group of people
-- Determine when the activity can be added to the user's calendar given a specific day
-- User has the option to share their activities with friends; friends can view them and add it to their calendar 
-- Reccomend similar products 
-  - create a similarity scale based on certain tags (ex: time, allergens)
-
+- Optimized search bar so that api calls are only made after the user stops typing for a certain amount of time
+  - prevents the multiple unnecessary api calls from being made every time the user changes the search input
+- Created allergen tags for all recipes based on common ingredeints that trigger the allergy
 
 ## Wireframe
 - figma link: https://www.figma.com/file/nWtfnVrjReOwOW8wyMNfbq/Capstone-Project?node-id=0%3A1
