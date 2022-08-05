@@ -30,11 +30,16 @@ export default function App() {
   const [firstName, setFirstName] = useState("")
   const [email, setEmail] = useState("")
   const [sub, setSub] = useState("")
+  const [code,setCode] = useState("")
   //user list variables
   const [userListName, setUserListName] = useState("")
   const [newListRecipes, setNewListRecipes] = useState([])
   //search variables
   const [searchRecipes, setSearchRecipes] = useState([])
+  const [chosenRecipe, setChosenRecipe] = useState({})
+  //google calendar event variables 
+  const [startDateTime, setStartDateTime] = useState()
+  const [endDateTime, setEndDateTime] = useState()
  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -43,7 +48,7 @@ export default function App() {
         .then(result => {
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
-        })
+        }) 
         .catch(e=>setError(e))
     }
     if (!retrievedRecipes) {
@@ -67,11 +72,53 @@ export default function App() {
   }
 
   const handleOnSearchChange = (searchInput) => {
-    axios.get(`http://localhost:3001/${searchInput}`)
+    if(searchInput === "") {
+      return
+    }
+
+    axios.get(`http://localhost:3001/search/${searchInput}`)
       .then (res => {
         setSearchRecipes(res.data.recipes)
       })
       .catch (e => console.log(e))
+  }
+
+  const handleChooseRecipe = (recipe) => {
+    setChosenRecipe(recipe)
+  }
+
+  const handleAddRecipe = (listName) => {
+    axios.post('http://localhost:3001/api/add-recipe-to-user-list', {"recipe":chosenRecipe, "objectId":objectId, "listName":listName})
+      .then (res => {
+        setUserLists(res.data.updatedUserLists)
+      })
+      .catch (e => console.log(e))
+  }
+
+  const handleCreateCalendarEvent = async (summary,description,recipe) => {
+    if(typeof endDateTime === "number") {
+      let date = new Date(startDateTime) 
+      let startMilliseconds = date.getTime()
+      let totalMilliseconds = startMilliseconds + endDateTime*60000
+      let newEndDate = new Date(totalMilliseconds)
+      handleCreateCalendarEventPost(summary,description, newEndDate)
+    } else {
+      handleCreateCalendarEventPost(summary,description, endDateTime)
+    }
+  }
+
+  const handleCreateCalendarEventPost = async (summary,description,endDate) => {
+    axios.post('http://localhost:3001/api/create-event',{
+      summary:summary,
+      description:description,
+      startDateTime: startDateTime, 
+      endDateTime:endDate,
+      objectId:objectId,
+      access_token:accessToken,
+      expiryDate:expiryDate
+    })
+      .then(res => {})
+      .catch(e => console.log(e))
   }
 
   return (
@@ -80,7 +127,7 @@ export default function App() {
         <main>
           <Navbar idToken={idToken} setIdToken={setIdToken} setAccessToken={setAccessToken} setExpiryDate={setExpiryDate} 
             setObjectId={setObjectId} setUserLists={setUserLists} setName={setName} setFirstName={setFirstName} setEmail={setEmail} 
-            setSub={setSub} setSearchRecipes={setSearchRecipes} />
+            setSub={setSub} setSearchRecipes={setSearchRecipes} setCode={setCode}/>
           <Routes>
             <Route path="/" element={
               <div className='main-page'>
@@ -88,17 +135,23 @@ export default function App() {
                 <Home categorizedRecipes={categorizedRecipes} categories={categories} subCategories={subCategories} 
                     isFetching = {isFetching} setIsFetching = {setIsFetching} handleListDetails={handleListDetails}
                     idToken={idToken} userLists={userLists} setUserListName={setUserListName} createList={createList}
-                    setNewListRecipes={setNewListRecipes}/>
+                    setNewListRecipes={setNewListRecipes} setChosenRecipe={setChosenRecipe} handleChooseRecipe={handleChooseRecipe}
+                    newListRecipes={newListRecipes} handleAddRecipe={handleAddRecipe}/>
               </div>
             }/>
             <Route path="/list/:category/:listName" element={
               <div className='single-list'>
-                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} pic={""} idToken={idToken}/>
+                <ListDetails categorizedRecipes={categorizedRecipes} category={category} subCategory={subCategory} subCatRecipes={subCatRecipes} 
+                  pic={""} idToken={idToken} userLists={userLists} setNewListRecipes={setNewListRecipes} createList ={createList} setUserListName={setUserListName} 
+                  handleAddRecipe={handleAddRecipe} setChosenRecipe={setChosenRecipe} setStartDateTime={setStartDateTime} setEndDateTime={setEndDateTime} 
+                  handleCreateCalendarEvent={handleCreateCalendarEvent} endDateTime={endDateTime}/>
               </div>
             }/>
-            <Route path="/search" element={
+            <Route path="/search" onClick={()=>alert("boo")} element={
               <div className='search-page'>
-                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} />
+                <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setSearchRecipes={setSearchRecipes} setChosenRecipe={setChosenRecipe} 
+                  handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
+                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken}/>
               </div>
             }/>
             <Route path="*" element={

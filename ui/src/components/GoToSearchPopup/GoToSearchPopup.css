@@ -1,4 +1,4 @@
-.recipe-popup {
+.go-to-search-popup {
     position: fixed;
     top:0;
     left:0;
@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-.recipe-popup-inner {
+.go-to-search-popup-inner {
     position: relative;
     padding: 32px;
     width: 100%;
@@ -19,8 +19,12 @@
     background-color: #FFF;
 }
 
-.recipe-popup-inner .close-btn {
+.go-to-search-popup-inner .close-btn {
     position: absolute;
     top:16px;
     right:16px;
+}
+
+.no-recipes-text {
+    font-size: 50px;
 }

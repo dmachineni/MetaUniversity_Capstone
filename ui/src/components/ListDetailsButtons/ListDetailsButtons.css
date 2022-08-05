@@ -2,5 +2,15 @@
     margin-right: 50px;
     margin-bottom: 20px;
     margin-left:2%;
+    font-size: 20px;
 }
 
+.list-details-buttons {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.google-cal-form-box {
+    margin-right: 50px;
+}

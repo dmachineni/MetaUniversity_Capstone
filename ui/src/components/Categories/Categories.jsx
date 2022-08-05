@@ -2,26 +2,11 @@ import "./Categories.css"
 import React from "react"
 import ListGrid from "../ListGrid/ListGrid"
 import { useState } from "react" 
-import Search from "../Search/Search"
-
 
 export default function Categories(props) {
-    const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [isFormOpen, setIsFormOpen] = useState(false)
 
     let categories = Object.keys(props.categorizedRecipes)
-    const handleGeneralCategories = () => {
-        return (
-            categories.map((category, idx) => {
-                return(
-                    <div className="category-info" key={idx}>
-                        <h2>{category.toUpperCase()}</h2>
-                        <ListGrid category= {category} categoryRecipes = {props.categorizedRecipes[category]} 
-                            handleListDetails={props.handleListDetails}/>
-                    </div>
-                )
-            })
-        )
-    }
     
     const generateNewListForm = () => {
         return (
@@ -31,11 +16,10 @@ export default function Categories(props) {
                         <input className="name-input" type="text" name="name"
                             placeholder="Cookbook Name" onChange={(e)=>props.setUserListName(e.target.value)}></input>
                     </label>
-                    <Search setNewListRecipes={props.setNewListRecipes}/>
-                    <button className="close" type="button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Close</button>
+                    <button className="close" type="button" onClick={()=>setIsFormOpen(!isFormOpen)}>Close</button>
                     <button className="submit"  onClick={(e)=> {
                         e.preventDefault()
-                        setIsPopupOpen(!isPopupOpen)
+                        setIsFormOpen(!isFormOpen)
                         props.createList()
                     }}>Create</button>
                 </form>
@@ -47,13 +31,31 @@ export default function Categories(props) {
         return(
             <div className="user-list-info">
                 <div className="my-lists">
-                    <button className="new-user-list-button" onClick={()=>setIsPopupOpen(!isPopupOpen)}>Create new list!</button>
-                    {isPopupOpen ? generateNewListForm() : ""}
+                    <button className="new-user-list-button" onClick={()=>setIsFormOpen(!isFormOpen)}>Create new list!</button>
+                    {isFormOpen ? generateNewListForm() : ""}
                     <h2>MY LISTS</h2>
-                    <ListGrid category={"user lists"} categoryRecipes={props.userLists} handleListDetails={props.handleListDetails} />
+                    <ListGrid category={"user lists"} categoryRecipes={props.userLists} handleListDetails={props.handleListDetails} 
+                        setChosenRecipe={props.setChosenRecipe} userLists={props.userLists} handleChooseRecipe={props.handleChooseRecipe}
+                        setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes} 
+                        handleAddRecipe={props.handleAddRecipe} idToken={props.idToken}/>
                 </div>
                 {handleGeneralCategories()}
             </div>
+        )
+    }
+
+    const handleGeneralCategories = () => {
+        return (
+            categories.map((category, idx) => {
+                return(
+                    <div className="category-info" key={idx}>
+                        <h2>{category.toUpperCase()}</h2>
+                        <ListGrid category= {category} categoryRecipes = {props.categorizedRecipes[category]} 
+                            handleListDetails={props.handleListDetails} handleChooseRecipe={props.handleChooseRecipe}
+                            userLists={props.userLists} idToken={props.idToken}/>
+                    </div>
+                )
+            })
         )
     }
 
