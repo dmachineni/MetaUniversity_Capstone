@@ -147,7 +147,7 @@ export default function App() {
                   handleCreateCalendarEvent={handleCreateCalendarEvent} endDateTime={endDateTime}/>
               </div>
             }/>
-            <Route path="/search" onClick={()=>alert("boo")} element={
+            <Route path="/search" element={
               <div className='search-page'>
                 <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setSearchRecipes={setSearchRecipes} setChosenRecipe={setChosenRecipe} 
                   handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
