@@ -25,8 +25,8 @@ class Recipes {
         })
       })
 
-      let categories = ["desserts"]
-      let subCategories = ["under 30 minutes","comfort food"] 
+      let categories = ["brunch", "lunch", "desserts"]
+      let subCategories = ["under 30 minutes","comfort food","dairy-free"] 
 
       let toReturn = {"all lists": {}}
       for (let i = 0; i < categories.length; i++) {
@@ -98,8 +98,7 @@ class Recipes {
                   let ingredientsInfo = await parseObj.get("ingredientsInfo")
                   let allergens = await parseObj.get("allergens")
                   let ingredients = await parseObj.get("ingredients")
-
-
+                  let nutrition = await parseObj.get("nutrition")
 
                   let obj = {
                     id:id,
@@ -112,7 +111,8 @@ class Recipes {
                     videoUrl:videoUrl,
                     ingredientsInfo:ingredientsInfo,
                     allergens:allergens,
-                    ingredients:ingredients
+                    ingredients:ingredients,
+                    nutrition:nutrition
                   }
                   toAdd[subCat].push(obj)
                 }

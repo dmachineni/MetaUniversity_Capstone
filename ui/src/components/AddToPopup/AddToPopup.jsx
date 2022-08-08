@@ -6,7 +6,7 @@ export default function AddToPopup(props) {
         (props.addToPopup) ? 
             (
                 <div className="add-to-popup">
-                    <div className="recipe-popup-inner">
+                    <div className="add-to-popup-inner">
                         <button className="close-btn" onClick={()=> props.setAddToPopup(false)}>close</button>
                         <div className="add-to-options">
                                 {
