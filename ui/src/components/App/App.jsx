@@ -6,7 +6,7 @@ import './App.css'
 import Home from '../Home/Home'
 import NotFound from "../NotFound/NotFound"
 import ListDetails from "../ListDetails/ListDetails"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useRef} from "react"
 import axios from 'axios'
 import Search from "../Search/Search"
 
@@ -37,6 +37,7 @@ export default function App() {
   //search variables
   const [searchRecipes, setSearchRecipes] = useState([])
   const [chosenRecipe, setChosenRecipe] = useState({})
+  const lastSearchPromise = useRef(null)
   //google calendar event variables 
   const [startDateTime, setStartDateTime] = useState()
   const [endDateTime, setEndDateTime] = useState()
@@ -44,12 +45,12 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function requests() {
-      await axios.get('http://localhost:3001/')
-        .then(result => {
+      axios.get('http://localhost:3001/')
+      .then(result => {
           setCategorizedRecipes(result.data["all lists"])
           setRetrievedRecipes(true)
         }) 
-        .catch(e=>setError(e))
+      .catch(e=>setError(e))
     }
     if (!retrievedRecipes) {
       requests()
@@ -75,12 +76,16 @@ export default function App() {
     if(searchInput === "") {
       return
     }
+    let currPromise = axios.get(`http://localhost:3001/search/${searchInput}`)
 
-    axios.get(`http://localhost:3001/search/${searchInput}`)
-      .then (res => {
+    lastSearchPromise.current = currPromise
+
+    currPromise.then (res => {
+      if (lastSearchPromise.current === currPromise) {
         setSearchRecipes(res.data.recipes)
-      })
-      .catch (e => console.log(e))
+      } 
+    })
+    currPromise.catch (e => console.log(e))
   }
 
   const handleChooseRecipe = (recipe) => {
@@ -151,7 +156,7 @@ export default function App() {
               <div className='search-page'>
                 <Search handleOnSearchChange={handleOnSearchChange} searchRecipes={searchRecipes} setSearchRecipes={setSearchRecipes} setChosenRecipe={setChosenRecipe} 
                   handleChooseRecipe={handleChooseRecipe} userLists={userLists}  setNewListRecipes={setNewListRecipes} createList ={createList}
-                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken}/>
+                  newListRecipes={newListRecipes} setUserListName={setUserListName} handleAddRecipe={handleAddRecipe} idToken={idToken} lastSearchPromise={lastSearchPromise} />
               </div>
             }/>
             <Route path="*" element={
