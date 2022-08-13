@@ -7,4 +7,11 @@
 .list-title{
     font-size: 50px;
     color:white;
+	margin-left: 50px;
+	margin-bottom:20px;
+	margin-top:60px;
+}
+
+.list-num-of-recipes {
+	font-size: 20px;
 }

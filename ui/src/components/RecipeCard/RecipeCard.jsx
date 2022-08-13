@@ -18,9 +18,29 @@ export default function RecipeCard(props) {
                 </button>
             }
             <div className="recipe-card-allergens">{
-                props.recipe.allergens.map(a => (
-                    <div className="single-allergen-tag">{a}</div>
-                ))
+                props.recipe.allergens.map((a,idx) => {
+                    // <div> 
+                        let divId = `${a}-${idx}`
+                        let color
+                        if(a === "milk") {
+                            color = "#F1B8FF"
+                        } else if (a === "soy") {
+                            color = "#FEFFB8"
+                        } else if (a === "eggs") {
+                            color = "#D9FFC7"
+                        } else if (a === "nuts") {
+                            color = "#ABE1FF"
+                        }
+
+                        var newStyles = document.createElement('style')
+                        document.head.append(newStyles)
+                        newStyles.innerHTML = `#${divId} {` +
+                            "background-color: " +color +
+                        "}"
+
+                        return (<div className="single-allergen-tag" id={divId}>{a}</div>)
+                    // </div>
+                })
             }</div>
 
             <Popup setRecipePopup={setRecipePopup} recipePopup={recipePopup} recipe={props.recipe} setStartDateTime={props.setStartDateTime} 

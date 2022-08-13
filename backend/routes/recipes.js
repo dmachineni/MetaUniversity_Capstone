@@ -3,10 +3,11 @@ const storage = require('../data/storage.js');
 const router = express.Router()
 const info = require('../models/recipes');
 const axios = require('axios')
+const {PARSE_APP_ID, PARSE_JAVASCRIPT_KEY} = require('../auth-keys')
 
 const Parse = require('parse/node');
 const { Component } = require('react');
-Parse.initialize("WrhhT0n3PD3RkdESL6pAsvqN86YDNS9eP0v1VdZg", "WliFyOgGrffxxYv0IfvChkvx8a1ByDYKY7tadIDW")
+Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = "https://parseapi.back4app.com"
 
 const milkAllergenIngredients = [
@@ -82,13 +83,40 @@ const milkAllergenIngredients = [
     "ice cream",
     "cream cheese"
 ]
-const glutenAllergenIngredients = []
-const soyAllergenIngredients = []
-const eggsAllergenIngredients = []
-const nutsAllergenIngredients = []
+const glutenAllergenIngredients = [
+]
+const soyAllergenIngredients = [
+    "Bean curd", "Edamame", "Hydrolyzed soy protein", "Kinnoko flour", "Kyodofu", "Miso", "Natto", 
+    "Okara", "Shoyu sauce", "Soy albumin", "Soy bran", "Soy concentrate", "Soy fiber", "Soy flour", 
+    "Soy formula", "Soy grits", "Soy milk", "Soy miso", "Soy nuts", "Soy nut butter", "Soy protein", 
+    "soy protein concentrate", "Soy protein isolate", "Soy sauce", "Soy sprouts", "Soya", "Soya Flour", 
+    "Soybeans", "Soybean granules", "Soybean curd", "Soybean flour", "Soy lecithin*", "Soybean paste", 
+    "Supro", "Tamari", "Tempeh", "Teriyaki sauce", "Textured soy flour", "Textured soy protein", 
+    "Textured vegetable protein", "Tofu", "Yakidofu", "Yuba", "bean curd"
+]
+const eggsAllergenIngredients = [
+    "Albumin", "Apovitellin", "Cholesterol free egg substitute", "Eggbeaters", "Dried egg solids, dried egg", 
+    "Egg", "egg white", "egg yolk", "Egg wash", "Eggnog", "Fat substitutes", "Globulin", "Livetin", "Lysozyme", 
+    "Mayonnaise", "Meringue", "meringue powder", "Ovalbumin", "Ovoglobulin", "Ovomucin", "Ovomucoid", "Ovotransferrin",
+    "Ovovitelia", "Ovovitellin", "Powdered eggs", "Silici albuminate", "Simplesse", "Surimi", "Trailblazer", "Vitellin", 
+    "Whole egg"
+]
+const nutsAllergenIngredients = [
+    "Almond", "Artificial nuts", "Beechnut", "Black walnut hull extract", "Brazil nut", "Butternut", "Cashew", "Chestnut", 
+    "Chinquapin nut", "Coconut", "Filbert/hazelnut", "Gianduja", "Ginkgo nut", "Hickory nut", "Litchi/lichee/lychee nut", 
+    "Macadamia nut", "Marzipan/almond paste", "Nangai nut", "almond extract", "walnut extract", "hazelnut extract", 
+    "cashew extract", "pistachio extract", "macadamia extract", "brazil nut extract", "Nut butters", "cashew butter", 
+    "walnut butter", "coconut", "coconut butter", "tahini", "Sunflower seed butter", "soy nut butter", "peanut butter", 
+    "hazelnut butter", "Nut distillates/alcoholic extracts", "Nut meal", "Nut meat", "almond milk", "cashew milk", 
+    "Macadamia nut milk", "Hazelnut milk", "Walnut milk", "Peanut milk", "Almond Oil", "Coconut Oil", "Hazelnut Oil", 
+    "walnut oil", "peanut oil", "almond paste", "walnut paste", "hazelnut paste", "cashew paste", "pistachio paste", 
+    "macadamia paste", "brazil nut paste", "Nut paste", "cashew paste", "walnut paste", "coconut paste", "Nut pieces", 
+    "Pecan", "Pesto", "Pili nut", "Pine nut", "pignoli", "pigñolia", "pignon", "piñon", "pinyon nut", "Pistachio", "Praline", 
+    "Shea nut", "Walnut", "Walnut hull extract"
+]
 
-const listOfAllergens = ["milk"]
-const allergenIngredients = [milkAllergenIngredients]
+const listOfAllergens = ["milk", "soy", "eggs", "nuts"]
+const allergenIngredients = [milkAllergenIngredients, soyAllergenIngredients, eggsAllergenIngredients, nutsAllergenIngredients]
 
 //recursive function to check if the value is contained in the array
 function checkVal(array, value) {
@@ -122,7 +150,7 @@ router.post('/',(req,res,next) => {
 
 router.get('/allrecipes', (req,res,next)  =>  {
     try {
-        for (let i = 0; i < 40; i += 40) {
+        for (let i = 200; i < 800; i += 40) {
             const options = {
             method: 'GET',
             url: 'https://tasty.p.rapidapi.com/recipes/list',
@@ -165,6 +193,7 @@ router.get('/allrecipes', (req,res,next)  =>  {
                         })
 
                         recipeObject.set("name", r.name)
+                        recipeObject.set("recipeId", r["id"])
                         recipeObject.set("thumbnailUrl", r["thumbnail_url"])
                         recipeObject.set("totalTimeTier", r["total_time_tier"])
                         recipeObject.set("totalTimeMinutes", r["total_time_minutes"]) 
@@ -174,12 +203,11 @@ router.get('/allrecipes', (req,res,next)  =>  {
                         } else {
                             recipeObject.set("description", r["description"])
                         }
-                        if (r["description"] === undefined) {
-                            recipeObject.set("videoUrl", r["original_video_url"])
+                        if (r["renditions"].length === 0) {
+                            recipeObject.set("videoUrl", "")
                         } else {
-                            recipeObject.set("videoUrl", r["video_url"])
+                            recipeObject.set("videoUrl", r["renditions"][0]["url"])
                         }
-                        recipeObject.set("recipeId", r["id"])
                         recipeObject.set("nutrition", r["nutrition"])
                         recipeObject.set("instructions", r["instructions"])
                         recipeObject.set("ingredientsInfo", r["sections"])

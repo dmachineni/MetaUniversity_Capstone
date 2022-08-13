@@ -3,11 +3,27 @@
     width:20%;
     margin-right:5%;
     margin-left:2%;
-
+    max-height: 300px;
+    max-width: 300px;
 }
 
 .recipe-card {
     display: flex;
     flex-direction: row;
     margin-bottom: 5%;
+    align-items: center;
+}
+
+.recipe-card-allergens {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.single-allergen-tag {
+    margin-left: 10px;
+}
+
+.recipe-card-name {
+    margin-right: 10px;
 }

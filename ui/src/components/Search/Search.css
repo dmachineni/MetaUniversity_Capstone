@@ -1,19 +1,41 @@
 
 .search-results {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+    display: grid;
+    gap: 109px;
     grid-template-columns:repeat(auto-fill, minmax(200px,1fr));
 }
 
 .search-here-text {
-    font-size: 50px;
+    font-size: 100px;
+    font-weight: bold;
 }
 
-.search-bar {
+.search-hero {
     margin-bottom: 30px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.736), rgb(255, 255, 255, 0.736)) , url("https://thumbs.dreamstime.com/b/light-powder-baby-blue-color-plate-image-soft-pastel-powdery-tile-tinted-primary-range-238252222.jpg");
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-hero-contents {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-here-input {
+    align-items: center;
+    width: 50vh;
+    height: 20px;
 }
 
 .search {
-    margin-top: 50px;
+    margin-top: 90px;
+}
+
+ul{
+    list-style:square;
 }

@@ -6,6 +6,7 @@ import GoogleCalEventForm from "../GoogleCalEventForm/GoogleCalEventForm"
 export default function Popup(props) {
     const [isFormOpen, setIsFormOpen] = useState(false)
     let nutritionKeys = Object.keys(props.recipe.nutrition)
+    let pic = props.recipe.thumbnailUrl === undefined ? props.recipe.thumbnail_url : props.recipe.thumbnailUrl
 
     return ( 
         (props.recipePopup) ? 
@@ -60,25 +61,35 @@ export default function Popup(props) {
                                         })}
                                     </div> : ""
                                 }
+                                
                             </div>
                             <div className="recipe-info-right">
-                                <img className="recipe-pic" src={props.recipe.thumbnail_url}></img>
+                                <img className="recipe-pic" src={pic}></img>
                                 <div className="recipe-info-right-sub">
                                     <button className="add-recipe-to-calendar-btn" onClick={()=>setIsFormOpen(!isFormOpen)}>add to calendar</button>
-                                    {props.recipe.nutrition ? 
-                                        <div className="recipe-nutrition-info">
-                                            {nutritionKeys.map(key => {
-                                                if(key === "updated_at") {
-                                                    return
-                                                }
-                                                return (
-                                                    <div className="recipe-nutrition-tag">
-                                                        {key}: {props.recipe.nutrition[key]} {key==="calories" ? "" : "g"}
-                                                    </div>
-                                                )
-                                            })}
-                                        </div> : ""
-                                    }
+                                    <div className="recipe-nutrition-info">
+                                        {Object.keys(props.recipe.nutrition).length === 0 ? 
+                                            "" :
+                                            <div>
+                                                {console.log("hey", props.recipe.nutrition)}
+                                                <div className="recipe-nutrition-title">
+                                                    Macro Info
+                                                </div>
+                                                <div className="recipe-nutrition-details">
+                                                    {nutritionKeys.map(key => {
+                                                        if(key === "updated_at") {
+                                                            return
+                                                        }
+                                                        return (
+                                                            <ul className="recipe-nutrition-tag">
+                                                                <li>{key}: {props.recipe.nutrition[key]} {key==="calories" ? "" : "g"}</li>
+                                                            </ul>
+                                                        )
+                                                    })}
+                                                </div> 
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

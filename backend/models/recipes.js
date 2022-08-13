@@ -3,9 +3,10 @@ const { add } = require("lodash");
 const { all } = require("../app.js");
 const {storage} = require("../data/storage.js");
 const {BadRequestError } = require("../utils/errors.js");
+const {PARSE_APP_ID, PARSE_JAVASCRIPT_KEY} = require('../auth-keys')
 
 const Parse = require('parse/node')
-Parse.initialize("WrhhT0n3PD3RkdESL6pAsvqN86YDNS9eP0v1VdZg", "WliFyOgGrffxxYv0IfvChkvx8a1ByDYKY7tadIDW")
+Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = "https://parseapi.back4app.com"
 
 let parseQuery
@@ -26,7 +27,7 @@ class Recipes {
       })
 
       let categories = ["brunch", "lunch", "desserts"]
-      let subCategories = ["under 30 minutes","comfort food","dairy-free"] 
+      let subCategories = ["under 30 minutes","comfort food","dairy-free","vegetarian", "easy", "italian", "american"] 
 
       let toReturn = {"all lists": {}}
       for (let i = 0; i < categories.length; i++) {

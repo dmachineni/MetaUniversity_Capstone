@@ -3,10 +3,11 @@ const router = express.Router()
 const {google} = require('googleapis')
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} = require('../auth-keys')
 const axios = require('axios')
+const {PARSE_APP_ID, PARSE_JAVASCRIPT_KEY} = require('../auth-keys')
 
 const Parse = require('parse/node');
 const { time } = require('console');
-Parse.initialize("WrhhT0n3PD3RkdESL6pAsvqN86YDNS9eP0v1VdZg", "WliFyOgGrffxxYv0IfvChkvx8a1ByDYKY7tadIDW")
+Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY)
 Parse.serverURL = "https://parseapi.back4app.com"
 
 
@@ -46,6 +47,7 @@ router.post('/create-tokens', async (req,res,next) => {
                 .then ( async result => {
                     if(result === undefined) {
                         const userObject = new UserInfo();
+
 
                         userObject.set("sub", idTokenClaims.data.sub)
                         userObject.set("idToken", tokens.id_token)

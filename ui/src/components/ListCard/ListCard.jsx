@@ -11,7 +11,7 @@ export default function ListCard(props) {
   const [addToPopup, setAddToPopup] = useState(false)
   const [goToSearchPopup, setGoToSearchPopup] = useState(false)
 
-  const emptyList = () => {
+  const emptyUserList = () => {
     return (
         <div className="">
           <img className="subcat-list-card-img" src={"https://static.thenounproject.com/png/51422-200.png"} onClick={() => setGoToSearchPopup(true)}></img>   
@@ -30,6 +30,47 @@ export default function ListCard(props) {
           }  
       </Link>
     )
+  }
+
+  // const Subcat = () => {
+  //   if (props.subCatRecipes.length === 0) {
+  //     if (props.category === "user lists") {
+  //       return (
+  //         <div className="subcat-list-card">
+  //           {emptyUserList()}
+            
+  //           <p className = "subcat-list-name" >
+  //             {props.subCat}
+  //           </p>
+  //         </div>
+  //       )
+  //     } else {
+  //       return (
+  //         <div className="subcat-list-card">
+            
+  //         </div>
+  //       )
+  //     }
+  //   } else {
+  //     return (
+  //       <div className="subcat-list-card">
+  //         {nonEmptyList()}
+  //         <p className = "subcat-list-name" >
+  //           {props.subCat}
+  //         </p>
+  //       </div>
+  //     )
+  //   }
+  // }
+
+  const emptyList = () => {
+    return (
+        <div className="">
+          <img className="subcat-list-card-img" src={"https://static.thenounproject.com/png/51422-200.png"} onClick={() => setGoToSearchPopup(true)}></img>   
+          <GoToSearchPopup goToSearchPopup={goToSearchPopup} setGoToSearchPopup={setGoToSearchPopup}/>
+          
+        </div>
+    ) 
   }
 
   const Subcat = () => {

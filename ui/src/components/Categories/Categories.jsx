@@ -31,9 +31,9 @@ export default function Categories(props) {
         return(
             <div className="user-list-info">
                 <div className="my-lists">
-                    <button className="new-user-list-button" onClick={()=>setIsFormOpen(!isFormOpen)}>Create new list!</button>
+                    <button className="new-user-list-button" onClick={()=>setIsFormOpen(!isFormOpen)}>Create new cookbook!</button>
                     {isFormOpen ? generateNewListForm() : ""}
-                    <h2>MY LISTS</h2>
+                    <h2>MY COOKBOOKS</h2>
                     <ListGrid category={"user lists"} categoryRecipes={props.userLists} handleListDetails={props.handleListDetails} 
                         setChosenRecipe={props.setChosenRecipe} userLists={props.userLists} handleChooseRecipe={props.handleChooseRecipe}
                         setNewListRecipes={props.setNewListRecipes} createList ={props.createList} newListRecipes={props.newListRecipes} 

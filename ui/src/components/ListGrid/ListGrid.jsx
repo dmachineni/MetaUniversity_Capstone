@@ -14,10 +14,6 @@ export default function ListGrid(props) {
               handleListDetails={props.handleListDetails} setChosenRecipe={props.setChosenRecipe} handleChooseRecipe={props.handleChooseRecipe}
               userLists={props.userLists} newListRecipes={props.newListRecipes} handleAddRecipe={props.handleAddRecipe} idToken={props.idToken}/>
             )
-          } else {
-            return (
-              <ListCard subCatRecipes={[]} subCat={subCat[0]} idToken={props.idToken}/>
-            )
           }
         })}
       </div>
