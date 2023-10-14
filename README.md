@@ -2,7 +2,7 @@
 
 ## Project Description
 - Allows users to customize and create lists of activities, grouped based on general categories. The user can also randomly generate an activity 
-from the list based on a time parameter. The website will automatically add the activity to the user's calendar on the desired day and/or time. 
+from the list based on a cook/bake time parameter. The website will automatically add the activity to the user's google calendar on the desired day and/or time. 
 
 ## Core Features
 - Search bar that filters recipes based on user input
